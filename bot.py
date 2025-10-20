@@ -146,6 +146,9 @@ Soy *Fútbol Libre Bot*, tu asistente para ver partidos gratis.
 /partidos - Ver partidos de hoy
 /ayuda - Guía completa y soluciones
 
+🔍 *¿Buscas un partido específico?*
+¡Solo escribe el nombre del equipo o palabra clave!
+
 ¡Elige un comando y disfruta del fútbol! 🎉"""
     
     bot.reply_to(message, welcome_text, parse_mode='Markdown')
@@ -205,9 +208,67 @@ def send_help(message):
     print("✅ /ayuda enviado")
 
 # ========================
-# MANEJAR BOTONES DEL TECLADO
+# SISTEMA DE BÚSQUEDA INTELIGENTE
+# ========================
+def search_matches(message, search_term):
+    """Buscar partidos que coincidan con el término de búsqueda"""
+    try:
+        partidos = PARTIDOS_JSON["partidos"]
+        matches = []
+        
+        for partido in partidos:
+            # Buscar en el nombre del partido
+            if search_term in partido['partido'].lower():
+                matches.append(partido)
+        
+        if matches:
+            # Mostrar resultados de búsqueda
+            result_text = f"🔍 *Resultados para '{search_term.title()}'*:\n\n"
+            
+            for i, match in enumerate(matches, 1):
+                result_text += f"*{i}. {match['partido']}*\n"
+                result_text += f"🔗 {match['link']}\n\n"
+            
+            result_text += f"_📊 Encontré {len(matches)} partido(s)_"
+            
+        else:
+            # Si no encuentra resultados
+            result_text = f"❌ *No encontré partidos con '*'{search_term.title()}'*\n\n"
+            result_text += "💡 *Sugerencias:*\n"
+            result_text += "• Revisa la ortografía\n"
+            result_text += "• Usa términos más generales (ej: 'boca', 'madrid')\n"
+            result_text += "• Ver todos los partidos con /partidos"
+        
+        bot.reply_to(message, result_text, parse_mode='Markdown')
+        print(f"🔍 Búsqueda: '{search_term}' → {len(matches)} resultados")
+        
+    except Exception as e:
+        print(f"Error en búsqueda: {e}")
+        bot.reply_to(message, "❌ Error en la búsqueda. Intenta más tarde.")
+
+# ========================
+# MANEJAR TODOS LOS MENSAJES
 # ========================
 @bot.message_handler(func=lambda message: True)
+def handle_all_messages(message):
+    text = message.text.strip().lower()
+    
+    # Si es un comando conocido, manejarlo primero
+    if text in ["/start", "/partidos", "/ayuda"]:
+        return
+    
+    # Si es un botón del teclado, manejarlo
+    button_texts = ["📱 solución celular (vpn)", "💻 solución pc/tv (dns)", "🌐 modo incógnito", "❌ cerrar"]
+    if text in button_texts:
+        handle_buttons(message)
+        return
+    
+    # Si no es comando ni botón, es una búsqueda
+    search_matches(message, text)
+
+# ========================
+# MANEJAR BOTONES DEL TECLADO
+# ========================
 def handle_buttons(message):
     text = message.text
     
@@ -261,9 +322,6 @@ def handle_buttons(message):
                         reply_markup=telebot.types.ReplyKeyboardRemove())
         return
         
-    else:
-        response = "🤔 No entendí tu mensaje. Usa /start para ver los comandos disponibles."
-    
     bot.send_message(message.chat.id, response, parse_mode='Markdown')
 
 # ========================
