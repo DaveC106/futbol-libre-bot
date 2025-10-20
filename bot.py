@@ -1,7 +1,7 @@
 import telebot
 from flask import Flask
 import threading
-from telebot.types import ReplyKeyboardMarkup, KeyboardButton
+from telebot.types import ReplyKeyboardMarkup, KeyboardButton, InlineKeyboardMarkup, InlineKeyboardButton
 import os
 
 TOKEN = "7640481513:AAGXpRaze2oAK8XpQy6s7HphFWO-xvoKfzo"
@@ -85,7 +85,7 @@ PARTIDOS_JSON = {
 }
 
 # ========================
-# FOOTER PARA TODOS LOS MENSAJES
+# FOOTER PARA TODOS LOS MENSAJES (EXCEPTO START/MENU)
 # ========================
 def add_footer():
     return "\n\n🤔 *¿Quieres hacer algo más?*\nVolver al menú principal /menu"
@@ -94,7 +94,7 @@ def add_search_footer():
     return "\n\n🤔 *¿Quieres hacer algo más?*\nBuscar otro partido o /menu"
 
 # ========================
-# COMANDO /start Y /menu
+# COMANDO /start Y /menu (SIN FOOTER)
 # ========================
 @bot.message_handler(commands=['start', 'menu'])
 def send_welcome(message):
@@ -112,12 +112,12 @@ Soy el Bot de *Fútbol Libre*, tu asistente para ver partidos gratis.
 
 ¡Elige un comando y disfruta del fútbol! 🎉"""
     
-    full_message = welcome_text + add_footer()
-    bot.reply_to(message, full_message, parse_mode='Markdown')
+    # SIN FOOTER en start/menu
+    bot.reply_to(message, welcome_text, parse_mode='Markdown')
     print(f"✅ /{message.text[1:]} enviado a {user_name}")
 
 # ========================
-# COMANDO /partidos 
+# COMANDO /partidos (CON FOOTER)
 # ========================
 @bot.message_handler(commands=['partidos'])
 def send_matches(message):
@@ -145,15 +145,18 @@ def send_matches(message):
         bot.reply_to(message, error_message, parse_mode='Markdown')
 
 # ========================
-# COMANDO /ayuda CON TECLADO
+# COMANDO /ayuda CON INLINE KEYBOARD
 # ========================
 @bot.message_handler(commands=['ayuda'])
 def send_help(message):
-    keyboard = ReplyKeyboardMarkup(resize_keyboard=True)
-    keyboard.add(KeyboardButton("📱 Solución Celular (VPN)"))
-    keyboard.add(KeyboardButton("💻 Solución PC/TV (DNS)"))
-    keyboard.add(KeyboardButton("🌐 Modo Incógnito"))
-    keyboard.add(KeyboardButton("❌ Cerrar"))
+    # Crear inline keyboard (botones debajo del mensaje)
+    keyboard = InlineKeyboardMarkup(row_width=2)
+    keyboard.add(
+        InlineKeyboardButton("📱 Solución Celular (VPN)", callback_data="help_vpn"),
+        InlineKeyboardButton("💻 Solución PC/TV (DNS)", callback_data="help_dns"),
+        InlineKeyboardButton("🌐 Modo Incógnito", callback_data="help_incognito"),
+        InlineKeyboardButton("❌ Cerrar", callback_data="help_close")
+    )
     
     help_text = """📖 *AYUDA RÁPIDA* 📖
 
@@ -165,15 +168,77 @@ def send_help(message):
 
 ⚽️ *También puedes:* ver cómo pedir partidos o usar modo incógnito
 
-👇 *Elige una opción del menú:*"""
+📝 *Nota:* Si ninguna opción te funciona, puede ser un fallo del proveedor del servidor. Espera un momento y vuelve a intentar.
+
+👇 *Elige una opción:*"""
     
     full_message = help_text + add_footer()
     bot.send_message(message.chat.id, full_message, 
                     parse_mode='Markdown', reply_markup=keyboard)
-    print("✅ /ayuda enviado")
+    print("✅ /ayuda enviado con inline keyboard")
 
 # ========================
-# SISTEMA DE BÚSQUEDA INTELIGENTE
+# MANEJAR CALLBACKS DE INLINE KEYBOARD
+# ========================
+@bot.callback_query_handler(func=lambda call: True)
+def handle_callback(call):
+    if call.data == "help_vpn":
+        response = """📱 *SOLUCIÓN CELULAR - VPN*
+
+1. *Descarga una app VPN gratis:*
+   - Turbo VPN (recomendado)
+   - Windscribe
+   - Hotspot Shield
+
+2. *Conéctate a cualquier servidor*
+
+3. *Intenta ver el partido*
+
+¡Así se desbloquean todos los links! ✅"""
+        
+    elif call.data == "help_dns":
+        response = """💻 *SOLUCIÓN PC/TV - DNS*
+
+*Cambia tus DNS para arreglar pantalla negra:*
+
+1. *DNS Públicos:*
+   - Google: 8.8.8.8 y 8.8.4.4
+   - Cloudflare: 1.1.1.1 y 1.0.0.1
+
+2. *En Windows:* Red → Propiedades → IPv4
+3. *En Android:* WiFi → DNS privado
+4. *En Smart TV:* Configuración de red
+
+¡Listo, pantalla negra solucionada! ✅"""
+        
+    elif call.data == "help_incognito":
+        response = """🌐 *MODO INCÓGNITO*
+
+*Si tienes problemas, prueba en modo incógnito:*
+
+1. *Chrome/Edge:* Ctrl+Shift+N
+2. *Firefox:* Ctrl+Shift+P  
+3. *Safari:* Cmd+Shift+N
+
+*O también:*
+- Limpiar caché del navegador
+- Usar otro navegador
+- Reiniciar el router
+
+¡Suele solucionar muchos problemas! ✅"""
+        
+    elif call.data == "help_close":
+        # Solo responde al callback para quitar el "cargando"
+        bot.answer_callback_query(call.id, "✅ Ayuda cerrada")
+        return
+    
+    # Enviar respuesta y editar el mensaje original para quitar los botones
+    full_response = response + add_footer()
+    bot.send_message(call.message.chat.id, full_response, parse_mode='Markdown')
+    bot.answer_callback_query(call.id)
+
+# ========================
+# SISTEMA DE BÚSQUEDA INTELIGENTE (CON FOOTER)
 # ========================
 def search_matches(message, search_term):
     """Buscar partidos que coincidan con el término de búsqueda"""
@@ -200,7 +265,7 @@ def search_matches(message, search_term):
             # Si no encuentra resultados
             result_text = f"❌ *No encontré partidos con '*'{search_term.title()}'*\n\n"
             result_text += "💡 *Sugerencias:*\n"
-            result_result += "• Revisa la ortografía\n"
+            result_text += "• Revisa la ortografía\n"
             result_text += "• Usa términos más generales (ej: 'boca', 'madrid')\n"
             result_text += "• Ver todos los partidos con /partidos"
         
@@ -210,7 +275,7 @@ def search_matches(message, search_term):
         
     except Exception as e:
         print(f"Error en búsqueda: {e}")
-        error_message = "❌ Error en la búsqueda. Intenta más tarde." + add_footer()
+        error_message = "❌ Error en la búsqueda. Vuelve a intentar o prueba más tarde." + add_footer()
         bot.reply_to(message, error_message, parse_mode='Markdown')
 
 # ========================
@@ -224,74 +289,8 @@ def handle_all_messages(message):
     if text in ["/start", "/partidos", "/ayuda", "/menu"]:
         return
     
-    # Si es un botón del teclado, manejarlo
-    button_texts = ["📱 solución celular (vpn)", "💻 solución pc/tv (dns)", "🌐 modo incógnito", "❌ cerrar"]
-    if text in button_texts:
-        handle_buttons(message)
-        return
-    
-    # Si no es comando ni botón, es una búsqueda
+    # Si no es comando, es una búsqueda
     search_matches(message, text)
-
-# ========================
-# MANEJAR BOTONES DEL TECLADO
-# ========================
-def handle_buttons(message):
-    text = message.text
-    
-    if text == "📱 Solución Celular (VPN)":
-        response = """📱 *SOLUCIÓN CELULAR - VPN*
-
-1. *Descarga una app VPN gratis:*
-   - Turbo VPN (recomendado)
-   - Windscribe
-   - Hotspot Shield
-
-2. *Conéctate a cualquier servidor*
-
-3. *Vuelve a intentar el link*
-
-¡Así se desbloquean todos los links! ✅"""
-        
-    elif text == "💻 Solución PC/TV (DNS)":
-        response = """💻 *SOLUCIÓN PC/TV - DNS*
-
-*Cambia tus DNS para arreglar pantalla negra:*
-
-1. *DNS Públicos:*
-   - Google: 8.8.8.8 y 8.8.4.4
-   - Cloudflare: 1.1.1.1 y 1.0.0.1
-
-2. *En Windows:* Red → Propiedades → IPv4
-3. *En Android:* WiFi → DNS privado
-4. *En Smart TV:* Configuración de red
-
-¡Listo, pantalla negra solucionada! ✅"""
-        
-    elif text == "🌐 Modo Incógnito":
-        response = """🌐 *MODO INCÓGNITO*
-
-*Si tienes problemas, prueba en modo incógnito:*
-
-1. *Chrome/Edge:* Ctrl+Shift+N
-2. *Firefox:* Ctrl+Shift+P  
-3. *Safari:* Cmd+Shift+N
-
-*O también:*
-- Limpiar caché del navegador
-- Usar otro navegador
-- Reiniciar el router
-
-¡Suele solucionar muchos problemas! ✅"""
-        
-    elif text == "❌ Cerrar":
-        close_message = "✅ Menú cerrado." + add_footer()
-        bot.send_message(message.chat.id, close_message, 
-                        reply_markup=telebot.types.ReplyKeyboardRemove())
-        return
-    
-    full_response = response + add_footer()
-    bot.send_message(message.chat.id, full_response, parse_mode='Markdown')
 
 # ========================
 # MANTENER BOT ACTIVO
