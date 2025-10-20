@@ -14,54 +14,6 @@ app = Flask(__name__)
 PARTIDOS_JSON = {
   "partidos": [
     {
-      "partido": "Al Shorta vs Al Ittihad",
-      "link": "https://futbolibretv.pages.dev/#partido-26376"
-    },
-    {
-      "partido": "Dordrecht vs RKC Waalwijk",
-      "link": "https://futbolibretv.pages.dev/#partido-26385"
-    },
-    {
-      "partido": "PSV II vs ADO Den Haag",
-      "link": "https://futbolibretv.pages.dev/#partido-26386"
-    },
-    {
-      "partido": "Roda JC vs Almere City",
-      "link": "https://futbolibretv.pages.dev/#partido-26387"
-    },
-    {
-      "partido": "Sport Huancayo vs Alianza Lima",
-      "link": "https://futbolibretv.pages.dev/#partido-26359"
-    },
-    {
-      "partido": "Al-Ahli vs Al Gharafa",
-      "link": "https://futbolibretv.pages.dev/#partido-26377"
-    },
-    {
-      "partido": "Cádiz vs Burgos",
-      "link": "https://futbolibretv.pages.dev/#partido-26378"
-    },
-    {
-      "partido": "Cremonese vs Udinese",
-      "link": "https://futbolibretv.pages.dev/#partido-26364"
-    },
-    {
-      "partido": "West Ham United vs Brentford",
-      "link": "https://futbolibretv.pages.dev/#partido-26362"
-    },
-    {
-      "partido": "Tigres vs Bogotá",
-      "link": "https://futbolibretv.pages.dev/#partido-26381"
-    },
-    {
-      "partido": "Deportivo Alavés vs Valencia",
-      "link": "https://futbolibretv.pages.dev/#partido-26363"
-    },
-    {
-      "partido": "Racing vs Juventud",
-      "link": "https://futbolibretv.pages.dev/#partido-26374"
-    },
-    {
       "partido": "Internacional Palmira vs Real Santander",
       "link": "https://futbolibretv.pages.dev/#partido-26383"
     },
@@ -133,26 +85,36 @@ PARTIDOS_JSON = {
 }
 
 # ========================
-# COMANDO /start
+# FOOTER PARA TODOS LOS MENSAJES
 # ========================
-@bot.message_handler(commands=['start'])
+def add_footer():
+    return "\n\n🤔 *¿Quieres hacer algo más?*\nVolver al menú principal /menu"
+    
+def add_search_footer():
+    return "\n\n🤔 *¿Quieres hacer algo más?*\nBuscar otro partido o /menu"
+
+# ========================
+# COMANDO /start Y /menu
+# ========================
+@bot.message_handler(commands=['start', 'menu'])
 def send_welcome(message):
     user_name = message.from_user.first_name
-    welcome_text = f"""¡Hola {user_name}! ⚽️
+    welcome_text = f"""¡Hola {user_name}! 👋
 
-Soy *Fútbol Libre Bot*, tu asistente para ver partidos gratis.
+Soy el Bot de *Fútbol Libre*, tu asistente para ver partidos gratis.
 
-📋 *Comandos disponibles:*
-/partidos - Ver partidos de hoy
+✅ *Comandos disponibles:*
+/partidos - Ver los partidos de hoy
 /ayuda - Guía completa y soluciones
 
-🔍 *¿Buscas un partido específico?*
-¡Solo escribe el nombre del equipo o palabra clave!
+*¿Buscas un partido específico?* 🔍
+¡Solo escribe el nombre del equipo o una palabra clave! ⚡
 
 ¡Elige un comando y disfruta del fútbol! 🎉"""
     
-    bot.reply_to(message, welcome_text, parse_mode='Markdown')
-    print(f"✅ /start enviado a {user_name}")
+    full_message = welcome_text + add_footer()
+    bot.reply_to(message, full_message, parse_mode='Markdown')
+    print(f"✅ /{message.text[1:]} enviado a {user_name}")
 
 # ========================
 # COMANDO /partidos 
@@ -173,12 +135,14 @@ def send_matches(message):
         else:
             partidos_text = "❌ *No hay partidos disponibles en este momento.*\n\nIntenta más tarde o usa /ayuda para soporte."
         
-        bot.reply_to(message, partidos_text, parse_mode='Markdown')
+        full_message = partidos_text + add_footer()
+        bot.reply_to(message, full_message, parse_mode='Markdown')
         print("✅ /partidos enviado")
         
     except Exception as e:
         print(f"Error en /partidos: {e}")
-        bot.reply_to(message, "❌ Error al cargar los partidos. Intenta más tarde.")
+        error_message = "❌ Error al cargar los partidos. Intenta más tarde." + add_footer()
+        bot.reply_to(message, error_message, parse_mode='Markdown')
 
 # ========================
 # COMANDO /ayuda CON TECLADO
@@ -193,17 +157,18 @@ def send_help(message):
     
     help_text = """📖 *AYUDA RÁPIDA* 📖
 
-❌ *¿No te anda el partido?*
-👉 Probá primero estas soluciones:
+❌ *¿No puedes ver el partido?*
+👉 Prueba primero estas soluciones:
 
 📱 *En celular* → usar VPN (desbloquea los links)
 💻 *En PC/TV* → cambiar DNS (arregla pantalla negra)
 
-⚽️ *También podés:* ver cómo pedir partidos o usar modo incógnito
+⚽️ *También puedes:* ver cómo pedir partidos o usar modo incógnito
 
-👇 *Elegí una opción del menú:*"""
+👇 *Elige una opción del menú:*"""
     
-    bot.send_message(message.chat.id, help_text, 
+    full_message = help_text + add_footer()
+    bot.send_message(message.chat.id, full_message, 
                     parse_mode='Markdown', reply_markup=keyboard)
     print("✅ /ayuda enviado")
 
@@ -235,16 +200,18 @@ def search_matches(message, search_term):
             # Si no encuentra resultados
             result_text = f"❌ *No encontré partidos con '*'{search_term.title()}'*\n\n"
             result_text += "💡 *Sugerencias:*\n"
-            result_text += "• Revisa la ortografía\n"
+            result_result += "• Revisa la ortografía\n"
             result_text += "• Usa términos más generales (ej: 'boca', 'madrid')\n"
             result_text += "• Ver todos los partidos con /partidos"
         
-        bot.reply_to(message, result_text, parse_mode='Markdown')
+        full_message = result_text + add_search_footer()
+        bot.reply_to(message, full_message, parse_mode='Markdown')
         print(f"🔍 Búsqueda: '{search_term}' → {len(matches)} resultados")
         
     except Exception as e:
         print(f"Error en búsqueda: {e}")
-        bot.reply_to(message, "❌ Error en la búsqueda. Intenta más tarde.")
+        error_message = "❌ Error en la búsqueda. Intenta más tarde." + add_footer()
+        bot.reply_to(message, error_message, parse_mode='Markdown')
 
 # ========================
 # MANEJAR TODOS LOS MENSAJES
@@ -254,7 +221,7 @@ def handle_all_messages(message):
     text = message.text.strip().lower()
     
     # Si es un comando conocido, manejarlo primero
-    if text in ["/start", "/partidos", "/ayuda"]:
+    if text in ["/start", "/partidos", "/ayuda", "/menu"]:
         return
     
     # Si es un botón del teclado, manejarlo
@@ -275,21 +242,21 @@ def handle_buttons(message):
     if text == "📱 Solución Celular (VPN)":
         response = """📱 *SOLUCIÓN CELULAR - VPN*
 
-1. *Descargá una app VPN gratis:*
+1. *Descarga una app VPN gratis:*
    - Turbo VPN (recomendado)
    - Windscribe
    - Hotspot Shield
 
-2. *Conectate a cualquier servidor*
+2. *Conéctate a cualquier servidor*
 
-3. *Volvé a intentar el link*
+3. *Vuelve a intentar el link*
 
 ¡Así se desbloquean todos los links! ✅"""
         
     elif text == "💻 Solución PC/TV (DNS)":
         response = """💻 *SOLUCIÓN PC/TV - DNS*
 
-*Cambiá tus DNS para arreglar pantalla negra:*
+*Cambia tus DNS para arreglar pantalla negra:*
 
 1. *DNS Públicos:*
    - Google: 8.8.8.8 y 8.8.4.4
@@ -304,7 +271,7 @@ def handle_buttons(message):
     elif text == "🌐 Modo Incógnito":
         response = """🌐 *MODO INCÓGNITO*
 
-*Si tenés problemas, probá en modo incógnito:*
+*Si tienes problemas, prueba en modo incógnito:*
 
 1. *Chrome/Edge:* Ctrl+Shift+N
 2. *Firefox:* Ctrl+Shift+P  
@@ -318,11 +285,13 @@ def handle_buttons(message):
 ¡Suele solucionar muchos problemas! ✅"""
         
     elif text == "❌ Cerrar":
-        bot.send_message(message.chat.id, "✅ Menú cerrado. Usa /ayuda para volver a abrir.", 
+        close_message = "✅ Menú cerrado." + add_footer()
+        bot.send_message(message.chat.id, close_message, 
                         reply_markup=telebot.types.ReplyKeyboardRemove())
         return
-        
-    bot.send_message(message.chat.id, response, parse_mode='Markdown')
+    
+    full_response = response + add_footer()
+    bot.send_message(message.chat.id, full_response, parse_mode='Markdown')
 
 # ========================
 # MANTENER BOT ACTIVO
