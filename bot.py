@@ -1,13 +1,136 @@
 import telebot
 from flask import Flask
 import threading
-import requests
 from telebot.types import ReplyKeyboardMarkup, KeyboardButton
 import os
 
 TOKEN = "7640481513:AAGXpRaze2oAK8XpQy6s7HphFWO-xvoKfzo"
 bot = telebot.TeleBot(TOKEN)
 app = Flask(__name__)
+
+# ========================
+# PARTIDOS DIRECTAMENTE EN EL CÓDIGO
+# ========================
+PARTIDOS_JSON = {
+  "partidos": [
+    {
+      "partido": "Al Shorta vs Al Ittihad",
+      "link": "https://futbolibretv.pages.dev/#partido-26376"
+    },
+    {
+      "partido": "Dordrecht vs RKC Waalwijk",
+      "link": "https://futbolibretv.pages.dev/#partido-26385"
+    },
+    {
+      "partido": "PSV II vs ADO Den Haag",
+      "link": "https://futbolibretv.pages.dev/#partido-26386"
+    },
+    {
+      "partido": "Roda JC vs Almere City",
+      "link": "https://futbolibretv.pages.dev/#partido-26387"
+    },
+    {
+      "partido": "Sport Huancayo vs Alianza Lima",
+      "link": "https://futbolibretv.pages.dev/#partido-26359"
+    },
+    {
+      "partido": "Al-Ahli vs Al Gharafa",
+      "link": "https://futbolibretv.pages.dev/#partido-26377"
+    },
+    {
+      "partido": "Cádiz vs Burgos",
+      "link": "https://futbolibretv.pages.dev/#partido-26378"
+    },
+    {
+      "partido": "Cremonese vs Udinese",
+      "link": "https://futbolibretv.pages.dev/#partido-26364"
+    },
+    {
+      "partido": "West Ham United vs Brentford",
+      "link": "https://futbolibretv.pages.dev/#partido-26362"
+    },
+    {
+      "partido": "Tigres vs Bogotá",
+      "link": "https://futbolibretv.pages.dev/#partido-26381"
+    },
+    {
+      "partido": "Deportivo Alavés vs Valencia",
+      "link": "https://futbolibretv.pages.dev/#partido-26363"
+    },
+    {
+      "partido": "Racing vs Juventud",
+      "link": "https://futbolibretv.pages.dev/#partido-26374"
+    },
+    {
+      "partido": "Internacional Palmira vs Real Santander",
+      "link": "https://futbolibretv.pages.dev/#partido-26383"
+    },
+    {
+      "partido": "Boca Juniors de Cali vs Barranquilla",
+      "link": "https://futbolibretv.pages.dev/#partido-26382"
+    },
+    {
+      "partido": "Tigre vs Barracas Central",
+      "link": "https://futbolibretv.pages.dev/#partido-26365"
+    },
+    {
+      "partido": "Plaza Colonia vs Liverpool",
+      "link": "https://futbolibretv.pages.dev/#partido-26375"
+    },
+    {
+      "partido": "Deportivo Riestra vs Instituto",
+      "link": "https://futbolibretv.pages.dev/#partido-26366"
+    },
+    {
+      "partido": "Tristán Suárez vs Estudiantes Caseros",
+      "link": "https://futbolibretv.pages.dev/#partido-26379"
+    },
+    {
+      "partido": "Juventude vs RB Bragantino",
+      "link": "https://futbolibretv.pages.dev/#partido-26368"
+    },
+    {
+      "partido": "Vasco da Gama vs Fluminense",
+      "link": "https://futbolibretv.pages.dev/#partido-26369"
+    },
+    {
+      "partido": "Ferroviária vs Paysandu",
+      "link": "https://futbolibretv.pages.dev/#partido-26380"
+    },
+    {
+      "partido": "Sport Boys vs Melgar",
+      "link": "https://futbolibretv.pages.dev/#partido-26360"
+    },
+    {
+      "partido": "La Equidad vs Deportes Tolima",
+      "link": "https://futbolibretv.pages.dev/#partido-26371"
+    },
+    {
+      "partido": "El Nacional vs Deportivo Cuenca",
+      "link": "https://futbolibretv.pages.dev/#partido-26373"
+    },
+    {
+      "partido": "Atlético Tucumán vs San Lorenzo",
+      "link": "https://futbolibretv.pages.dev/#partido-26367"
+    },
+    {
+      "partido": "Santos vs Vitória",
+      "link": "https://futbolibretv.pages.dev/#partido-26370"
+    },
+    {
+      "partido": "Medellín vs Santa Fe",
+      "link": "https://futbolibretv.pages.dev/#partido-26372"
+    },
+    {
+      "partido": "Universitario vs Ayacucho",
+      "link": "https://futbolibretv.pages.dev/#partido-26361"
+    },
+    {
+      "partido": "Guadalupe vs Sporting San José",
+      "link": "https://futbolibretv.pages.dev/#partido-26384"
+    }
+  ]
+}
 
 # ========================
 # COMANDO /start
@@ -34,15 +157,13 @@ Soy *Fútbol Libre Bot*, tu asistente para ver partidos gratis.
 @bot.message_handler(commands=['partidos'])
 def send_matches(message):
     try:
-        partidos = obtener_partidos_desde_url()
+        partidos = PARTIDOS_JSON["partidos"]
         
         if partidos:
             partidos_text = "⚽️ *PARTIDOS DE HOY* ⚽️\n\n"
             
             for i, partido in enumerate(partidos, 1):
-                partidos_text += f"*{i}. {partido['liga']}*\n"
-                partidos_text += f"🕐 {partido['hora']} - {partido['equipos']}\n"
-                partidos_text += f"📺 {partido['canales']}\n"
+                partidos_text += f"*{i}. {partido['partido']}*\n"
                 partidos_text += f"🔗 {partido['link']}\n\n"
             
             partidos_text += "_⚠️ Los links pueden requerir VPN/DNS_"
@@ -55,21 +176,6 @@ def send_matches(message):
     except Exception as e:
         print(f"Error en /partidos: {e}")
         bot.reply_to(message, "❌ Error al cargar los partidos. Intenta más tarde.")
-
-def obtener_partidos_desde_url():
-    """Obtiene partidos desde tu URL de agenda"""
-    try:
-        url = "https://futbolibretv.pages.dev/agenda"
-        response = requests.get(url, timeout=10)
-        
-        if response.status_code == 200:
-            return response.json()
-        else:
-            print(f"Error HTTP: {response.status_code}")
-            return None
-    except Exception as e:
-        print(f"Error obteniendo partidos: {e}")
-        return None
 
 # ========================
 # COMANDO /ayuda CON TECLADO
@@ -122,7 +228,7 @@ def handle_buttons(message):
     elif text == "💻 Solución PC/TV (DNS)":
         response = """💻 *SOLUCIÓN PC/TV - DNS*
 
-*Cambiá tus DNS para arregla pantalla negra:*
+*Cambiá tus DNS para arreglar pantalla negra:*
 
 1. *DNS Públicos:*
    - Google: 8.8.8.8 y 8.8.4.4
