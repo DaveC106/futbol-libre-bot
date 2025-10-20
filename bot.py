@@ -5,7 +5,7 @@ import requests
 from telebot.types import ReplyKeyboardMarkup, KeyboardButton
 import os
 
-TOKEN = "7640481513:AAEohajUiMesu6pF-c0a0tPYdeGke3w3nXY"
+TOKEN = "7640481513:AAGXpRaze2oAK8XpQy6s7HphFWO-xvoKfzo"
 bot = telebot.TeleBot(TOKEN)
 app = Flask(__name__)
 
@@ -122,7 +122,7 @@ def handle_buttons(message):
     elif text == "💻 Solución PC/TV (DNS)":
         response = """💻 *SOLUCIÓN PC/TV - DNS*
 
-*Cambiá tus DNS para arreglar pantalla negra:*
+*Cambiá tus DNS para arregla pantalla negra:*
 
 1. *DNS Públicos:*
    - Google: 8.8.8.8 y 8.8.4.4
