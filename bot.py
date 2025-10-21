@@ -145,17 +145,17 @@ def send_matches(message):
         bot.reply_to(message, error_message, parse_mode='Markdown')
 
 # ========================
-# COMANDO /ayuda CON INLINE KEYBOARD
+# COMANDO /ayuda CON INLINE KEYBOARD (BOTONES UNO ENCIMA DE OTRO)
 # ========================
 @bot.message_handler(commands=['ayuda'])
 def send_help(message):
-    # Crear inline keyboard (botones debajo del mensaje)
-    keyboard = InlineKeyboardMarkup(row_width=2)
+    # Crear inline keyboard con botones uno encima del otro (row_width=1)
+    keyboard = InlineKeyboardMarkup(row_width=1)
     keyboard.add(
         InlineKeyboardButton("📱 Solución Celular (VPN)", callback_data="help_vpn"),
         InlineKeyboardButton("💻 Solución PC/TV (DNS)", callback_data="help_dns"),
-        InlineKeyboardButton("🌐 Modo Incógnito", callback_data="help_incognito"),
-        InlineKeyboardButton("❌ Cerrar", callback_data="help_close")
+        InlineKeyboardButton("🌐 Modo Incógnito", callback_data="help_incognito")
+        # ❌ ELIMINADO: Botón "Cerrar" - ya no es necesario
     )
     
     help_text = """📖 *AYUDA RÁPIDA* 📖
@@ -189,6 +189,7 @@ def handle_callback(call):
    - Turbo VPN (recomendado)
    - Windscribe
    - Hotspot Shield
+   - Cloudflare WARP (1.1.1.1)
 
 2. *Conéctate a cualquier servidor*
 
@@ -226,13 +227,8 @@ def handle_callback(call):
 - Reiniciar el router
 
 ¡Suele solucionar muchos problemas! ✅"""
-        
-    elif call.data == "help_close":
-        # Solo responde al callback para quitar el "cargando"
-        bot.answer_callback_query(call.id, "✅ Ayuda cerrada")
-        return
     
-    # Enviar respuesta y editar el mensaje original para quitar los botones
+    # Enviar respuesta
     full_response = response + add_footer()
     bot.send_message(call.message.chat.id, full_response, parse_mode='Markdown')
     bot.answer_callback_query(call.id)
