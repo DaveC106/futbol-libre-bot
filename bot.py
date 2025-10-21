@@ -12,74 +12,122 @@ app = Flask(__name__)
 # PARTIDOS DIRECTAMENTE EN EL CÓDIGO
 # ========================
 PARTIDOS_JSON = {
-  "partidos": [
+  "partidos": [ 
     {
-      "partido": "Internacional Palmira vs Real Santander",
-      "link": "https://futbolibretv.pages.dev/#partido-26383"
+      "partido": "Barcelona vs Olympiakos Piraeus",
+      "link": "https://futbolibretv.pages.dev/#partido-26394"
     },
     {
-      "partido": "Boca Juniors de Cali vs Barranquilla",
-      "link": "https://futbolibretv.pages.dev/#partido-26382"
+      "partido": "Kairat vs Paphos",
+      "link": "https://futbolibretv.pages.dev/#partido-26395"
     },
     {
-      "partido": "Tigre vs Barracas Central",
-      "link": "https://futbolibretv.pages.dev/#partido-26365"
+      "partido": "MVV vs Vitesse",
+      "link": "https://futbolibretv.pages.dev/#partido-26423"
     },
     {
-      "partido": "Plaza Colonia vs Liverpool",
-      "link": "https://futbolibretv.pages.dev/#partido-26375"
+      "partido": "Oss vs Ajax II",
+      "link": "https://futbolibretv.pages.dev/#partido-26421"
     },
     {
-      "partido": "Deportivo Riestra vs Instituto",
-      "link": "https://futbolibretv.pages.dev/#partido-26366"
+      "partido": "Den Bosch vs Helmond Sport",
+      "link": "https://futbolibretv.pages.dev/#partido-26422"
     },
     {
-      "partido": "Tristán Suárez vs Estudiantes Caseros",
-      "link": "https://futbolibretv.pages.dev/#partido-26379"
+      "partido": "Al Hilal vs Al Sadd",
+      "link": "https://futbolibretv.pages.dev/#partido-26407"
     },
     {
-      "partido": "Juventude vs RB Bragantino",
-      "link": "https://futbolibretv.pages.dev/#partido-26368"
+      "partido": "PSV vs Napoli",
+      "link": "https://futbolibretv.pages.dev/#partido-26396"
     },
     {
-      "partido": "Vasco da Gama vs Fluminense",
-      "link": "https://futbolibretv.pages.dev/#partido-26369"
+      "partido": "Villarreal vs Manchester City",
+      "link": "https://futbolibretv.pages.dev/#partido-26401"
     },
     {
-      "partido": "Ferroviária vs Paysandu",
-      "link": "https://futbolibretv.pages.dev/#partido-26380"
+      "partido": "Noruega vs Ecuador",
+      "link": "https://futbolibretv.pages.dev/#partido-26408"
     },
     {
-      "partido": "Sport Boys vs Melgar",
-      "link": "https://futbolibretv.pages.dev/#partido-26360"
+      "partido": "Always Ready vs Blooming",
+      "link": "https://futbolibretv.pages.dev/#partido-26418"
     },
     {
-      "partido": "La Equidad vs Deportes Tolima",
-      "link": "https://futbolibretv.pages.dev/#partido-26371"
+      "partido": "Union Saint-Gilloise vs Internazionale",
+      "link": "https://futbolibretv.pages.dev/#partido-26397"
     },
     {
-      "partido": "El Nacional vs Deportivo Cuenca",
-      "link": "https://futbolibretv.pages.dev/#partido-26373"
+      "partido": "Newcastle United vs Benfica",
+      "link": "https://futbolibretv.pages.dev/#partido-26402"
     },
     {
-      "partido": "Atlético Tucumán vs San Lorenzo",
-      "link": "https://futbolibretv.pages.dev/#partido-26367"
+      "partido": "Bristol City vs Southampton",
+      "link": "https://futbolibretv.pages.dev/#partido-26406"
     },
     {
-      "partido": "Santos vs Vitória",
-      "link": "https://futbolibretv.pages.dev/#partido-26370"
+      "partido": "Bayer Leverkusen vs PSG",
+      "link": "https://futbolibretv.pages.dev/#partido-26398"
     },
     {
-      "partido": "Medellín vs Santa Fe",
-      "link": "https://futbolibretv.pages.dev/#partido-26372"
+      "partido": "Arsenal vs Atlético Madrid",
+      "link": "https://futbolibretv.pages.dev/#partido-26399"
     },
     {
-      "partido": "Universitario vs Ayacucho",
-      "link": "https://futbolibretv.pages.dev/#partido-26361"
+      "partido": "København vs Borussia Dortmund",
+      "link": "https://futbolibretv.pages.dev/#partido-26400"
     },
     {
-      "partido": "Guadalupe vs Sporting San José",
-      "link": "https://futbolibretv.pages.dev/#partido-26384"
+      "partido": "Atlético Huila vs Real Cundinamarca",
+      "link": "https://futbolibretv.pages.dev/#partido-26417"
+    },
+    {
+      "partido": "Atlético Tembetary vs 2 de Mayo",
+      "link": "https://futbolibretv.pages.dev/#partido-26424"
+    },
+    {
+      "partido": "Unión Santa Fe vs Defensa y Justicia",
+      "link": "https://futbolibretv.pages.dev/#partido-26403"
+    },
+    {
+      "partido": "Portland Hearts of Pine vs Spokane Velocity",
+      "link": "https://futbolibretv.pages.dev/#partido-26416"
+    },
+    {
+      "partido": "Millonarios vs Atlético Bucaramanga",
+      "link": "https://futbolibretv.pages.dev/#partido-26404"
+    },
+    {
+      "partido": "Real Tomayapo vs Bolívar",
+      "link": "https://futbolibretv.pages.dev/#partido-26419"
+    },
+    {
+      "partido": "Independiente del Valle vs Atlético Mineiro",
+      "link": "https://futbolibretv.pages.dev/#partido-26405"
+    },
+    {
+      "partido": "Deportivo Pereira vs Envigado",
+      "link": "https://futbolibretv.pages.dev/#partido-26420"
+    },
+    {
+      "partido": "América vs Puebla",
+      "link": "https://futbolibretv.pages.dev/#partido-26412"
+    },
+    {
+      "partido": "Necaxa vs Cruz Azul",
+      "link": "https://futbolibretv.pages.dev/#partido-26413"
+    },
+    {
+      "partido": "Cartaginés vs Motagua",
+      "link": "https://futbolibretv.pages.dev/#partido-26409"
+    },
+    {
+      "partido": "Mazatlán vs Santos Laguna",
+      "link": "https://futbolibretv.pages.dev/#partido-26414"
+    },
+    {
+      "partido": "Monterrey vs Juárez",
+      "link": "https://futbolibretv.pages.dev/#partido-26415"
     }
   ]
 }
@@ -101,14 +149,14 @@ def send_welcome(message):
     user_name = message.from_user.first_name
     welcome_text = f"""¡Hola {user_name}! 👋
 
-Soy el Bot de *Fútbol Libre*, tu asistente para ver partidos gratis.
+Soy *FulbiBot*, tu asistente para ver partidos gratis.
 
 ✅ *Comandos disponibles:*
 /partidos - Ver los partidos de hoy
 /ayuda - Guía completa y soluciones
 
 *¿Buscas un partido específico?* 🔍
-¡Solo escribe el nombre del equipo o una palabra clave! ⚡
+¡Solo escribe el nombre del equipo que quieres ver! ⚡
 
 ¡Elige un comando y disfruta del fútbol! 🎉"""
     
