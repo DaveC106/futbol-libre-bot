@@ -4,7 +4,7 @@ import threading
 from telebot.types import ReplyKeyboardMarkup, KeyboardButton, InlineKeyboardMarkup, InlineKeyboardButton
 import os
 
-TOKEN = "7640481513:AAGXpRaze2oAK8XpQy6s7HphFWO-xvoKfzo"
+TOKEN = "7640481513:AAFbgl5p4GlTewlAVCO46M0f2PFibTT7d-w"
 bot = telebot.TeleBot(TOKEN)
 app = Flask(__name__)
 
