@@ -3,6 +3,7 @@ from flask import Flask
 import threading
 from telebot.types import ReplyKeyboardMarkup, KeyboardButton, InlineKeyboardMarkup, InlineKeyboardButton
 import os
+import re
 
 TOKEN = "7640481513:AAG9lbUvQGRjLYaHmp91LFKJo3O_YIY7RIw"
 bot = telebot.TeleBot(TOKEN)
@@ -12,125 +13,140 @@ app = Flask(__name__)
 # PARTIDOS DIRECTAMENTE EN EL CÓDIGO
 # ========================
 PARTIDOS_JSON = {
-  "partidos": [ 
+  "partidos": [
     {
-      "partido": "Barcelona vs Olympiakos Piraeus",
+      "partido": "UEFA Champions League: Barcelona vs Olympiakos Piraeus",
       "link": "https://futbolibretv.pages.dev/#partido-26394"
     },
     {
-      "partido": "Kairat vs Paphos",
+      "partido": "UEFA Champions League: Kairat vs Paphos",
       "link": "https://futbolibretv.pages.dev/#partido-26395"
     },
     {
-      "partido": "MVV vs Vitesse",
+      "partido": "Eerste Divisie: MVV vs Vitesse",
       "link": "https://futbolibretv.pages.dev/#partido-26423"
     },
     {
-      "partido": "Oss vs Ajax II",
+      "partido": "Eerste Divisie: Oss vs Ajax II",
       "link": "https://futbolibretv.pages.dev/#partido-26421"
     },
     {
-      "partido": "Den Bosch vs Helmond Sport",
+      "partido": "Eerste Divisie: Den Bosch vs Helmond Sport",
       "link": "https://futbolibretv.pages.dev/#partido-26422"
     },
     {
-      "partido": "Al Hilal vs Al Sadd",
+      "partido": "AFC Champions League: Al Hilal vs Al Sadd",
       "link": "https://futbolibretv.pages.dev/#partido-26407"
     },
     {
-      "partido": "PSV vs Napoli",
+      "partido": "UEFA Champions League: PSV vs Napoli",
       "link": "https://futbolibretv.pages.dev/#partido-26396"
     },
     {
-      "partido": "Villarreal vs Manchester City",
+      "partido": "UEFA Champions League: Villarreal vs Manchester City",
       "link": "https://futbolibretv.pages.dev/#partido-26401"
     },
     {
-      "partido": "Noruega vs Ecuador",
+      "partido": "Copa Mundial Femenina Sub-17 de la FIFA: Noruega vs Ecuador",
       "link": "https://futbolibretv.pages.dev/#partido-26408"
     },
     {
-      "partido": "Always Ready vs Blooming",
+      "partido": "Copa de la División Profesional: Always Ready vs Blooming",
       "link": "https://futbolibretv.pages.dev/#partido-26418"
     },
     {
-      "partido": "Union Saint-Gilloise vs Internazionale",
+      "partido": "UEFA Champions League: Union Saint-Gilloise vs Internazionale",
       "link": "https://futbolibretv.pages.dev/#partido-26397"
     },
     {
-      "partido": "Newcastle United vs Benfica",
+      "partido": "UEFA Champions League: Newcastle United vs Benfica",
       "link": "https://futbolibretv.pages.dev/#partido-26402"
     },
     {
-      "partido": "Bristol City vs Southampton",
+      "partido": "Championship: Bristol City vs Southampton",
       "link": "https://futbolibretv.pages.dev/#partido-26406"
     },
     {
-      "partido": "Bayer Leverkusen vs PSG",
+      "partido": "UEFA Champions League: Bayer Leverkusen vs PSG",
       "link": "https://futbolibretv.pages.dev/#partido-26398"
     },
     {
-      "partido": "Arsenal vs Atlético Madrid",
+      "partido": "UEFA Champions League: Arsenal vs Atlético Madrid",
       "link": "https://futbolibretv.pages.dev/#partido-26399"
     },
     {
-      "partido": "København vs Borussia Dortmund",
+      "partido": "UEFA Champions League: København vs Borussia Dortmund",
       "link": "https://futbolibretv.pages.dev/#partido-26400"
     },
     {
-      "partido": "Atlético Huila vs Real Cundinamarca",
+      "partido": "Primera B: Atlético Huila vs Real Cundinamarca",
       "link": "https://futbolibretv.pages.dev/#partido-26417"
     },
     {
-      "partido": "Atlético Tembetary vs 2 de Mayo",
+      "partido": "Copa Paraguay: Atlético Tembetary vs 2 de Mayo",
       "link": "https://futbolibretv.pages.dev/#partido-26424"
     },
     {
-      "partido": "Unión Santa Fe vs Defensa y Justicia",
+      "partido": "Liga Profesional: Unión Santa Fe vs Defensa y Justicia",
       "link": "https://futbolibretv.pages.dev/#partido-26403"
     },
     {
-      "partido": "Portland Hearts of Pine vs Spokane Velocity",
+      "partido": "USL League One: Portland Hearts of Pine vs Spokane Velocity",
       "link": "https://futbolibretv.pages.dev/#partido-26416"
     },
     {
-      "partido": "Millonarios vs Atlético Bucaramanga",
+      "partido": "Primera A: Millonarios vs Atlético Bucaramanga",
       "link": "https://futbolibretv.pages.dev/#partido-26404"
     },
     {
-      "partido": "Real Tomayapo vs Bolívar",
+      "partido": "Copa de la División Profesional: Real Tomayapo vs Bolívar",
       "link": "https://futbolibretv.pages.dev/#partido-26419"
     },
     {
-      "partido": "Independiente del Valle vs Atlético Mineiro",
+      "partido": "Copa Sudamericana: Independiente del Valle vs Atlético Mineiro",
       "link": "https://futbolibretv.pages.dev/#partido-26405"
     },
     {
-      "partido": "Deportivo Pereira vs Envigado",
+      "partido": "Copa Colombia: Deportivo Pereira vs Envigado",
       "link": "https://futbolibretv.pages.dev/#partido-26420"
     },
     {
-      "partido": "América vs Puebla",
+      "partido": "Liga MX: América vs Puebla",
       "link": "https://futbolibretv.pages.dev/#partido-26412"
     },
     {
-      "partido": "Necaxa vs Cruz Azul",
+      "partido": "Liga MX: Necaxa vs Cruz Azul",
       "link": "https://futbolibretv.pages.dev/#partido-26413"
     },
     {
-      "partido": "Cartaginés vs Motagua",
+      "partido": "Copa Centroamericana: Cartaginés vs Motagua",
       "link": "https://futbolibretv.pages.dev/#partido-26409"
     },
     {
-      "partido": "Mazatlán vs Santos Laguna",
+      "partido": "Liga MX: Mazatlán vs Santos Laguna",
       "link": "https://futbolibretv.pages.dev/#partido-26414"
     },
     {
-      "partido": "Monterrey vs Juárez",
+      "partido": "Liga MX: Monterrey vs Juárez",
       "link": "https://futbolibretv.pages.dev/#partido-26415"
     }
   ]
 }
+
+# ========================
+# FUNCIONES PARA FORMATEAR PARTIDOS
+# ========================
+def formato_limpio(partido_completo):
+    """Quita la liga/torneo, deja solo equipos vs equipos"""
+    # Busca el patron "liga: equipo vs equipo"
+    match = re.search(r':\s*(.+)', partido_completo)
+    if match:
+        return match.group(1).strip()  # Solo "equipo vs equipo"
+    return partido_completo  # Si no encuentra ":", devuelve completo
+
+def formato_completo(partido_completo):
+    """Mantiene el formato completo con liga/torneo"""
+    return partido_completo
 
 # ========================
 # FOOTER PARA TODOS LOS MENSAJES (EXCEPTO START/MENU)
@@ -156,7 +172,7 @@ Soy *FulbiBot*, tu asistente para ver partidos gratis.
 /ayuda - Guía completa y soluciones
 
 *¿Buscas un partido específico?* 🔍
-¡Solo escribe el nombre del equipo que quieres ver! ⚡
+¡Solo escribe el nombre del equipo o una palabra clave relacionada! ⚡
 
 ¡Elige un comando y disfruta del fútbol! 🎉"""
     
@@ -165,7 +181,7 @@ Soy *FulbiBot*, tu asistente para ver partidos gratis.
     print(f"✅ /{message.text[1:]} enviado a {user_name}")
 
 # ========================
-# COMANDO /partidos (CON FOOTER)
+# COMANDO /partidos (CON FOOTER - FORMATO LIMPIO)
 # ========================
 @bot.message_handler(commands=['partidos'])
 def send_matches(message):
@@ -176,16 +192,18 @@ def send_matches(message):
             partidos_text = "⚽️ *PARTIDOS DE HOY* ⚽️\n\n"
             
             for i, partido in enumerate(partidos, 1):
-                partidos_text += f"*{i}. {partido['partido']}*\n"
+                # FORMATO LIMPIO: solo equipos vs equipos
+                partido_limpio = formato_limpio(partido['partido'])
+                partidos_text += f"*{i}. {partido_limpio}*\n"
                 partidos_text += f"🔗 {partido['link']}\n\n"
             
-            partidos_text += "_⚠️ Los links pueden requerir VPN/DNS_"
+            partidos_text += "_⚠️ Los links pueden requerir buena conexión a internet/VPN/DNS_"
         else:
             partidos_text = "❌ *No hay partidos disponibles en este momento.*\n\nIntenta más tarde o usa /ayuda para soporte."
         
         full_message = partidos_text + add_footer()
         bot.reply_to(message, full_message, parse_mode='Markdown')
-        print("✅ /partidos enviado")
+        print("✅ /partidos enviado (formato limpio)")
         
     except Exception as e:
         print(f"Error en /partidos: {e}")
@@ -203,7 +221,6 @@ def send_help(message):
         InlineKeyboardButton("📱 Solución Celular (VPN)", callback_data="help_vpn"),
         InlineKeyboardButton("💻 Solución PC/TV (DNS)", callback_data="help_dns"),
         InlineKeyboardButton("🌐 Modo Incógnito", callback_data="help_incognito")
-        # ❌ ELIMINADO: Botón "Cerrar" - ya no es necesario
     )
     
     help_text = """📖 *AYUDA RÁPIDA* 📖
@@ -225,7 +242,7 @@ def send_help(message):
     print("✅ /ayuda enviado con inline keyboard")
 
 # ========================
-# MANEJAR CALLBACKS DE INLINE KEYBOARD (VERSIÓN MEJORADA)
+# MANEJAR CALLBACKS DE INLINE KEYBOARD
 # ========================
 @bot.callback_query_handler(func=lambda call: True)
 def handle_callback(call):
@@ -313,7 +330,7 @@ El modo incógnito evita problemas de cache, cookies y extensiones que pueden bl
     bot.answer_callback_query(call.id)
 
 # ========================
-# SISTEMA DE BÚSQUEDA INTELIGENTE (CON FOOTER)
+# SISTEMA DE BÚSQUEDA INTELIGENTE (CON FOOTER - FORMATO COMPLETO)
 # ========================
 def search_matches(message, search_term):
     """Buscar partidos que coincidan con el término de búsqueda"""
@@ -322,15 +339,16 @@ def search_matches(message, search_term):
         matches = []
         
         for partido in partidos:
-            # Buscar en el nombre del partido
+            # Buscar en el nombre COMPLETO del partido (con liga/torneo)
             if search_term in partido['partido'].lower():
                 matches.append(partido)
         
         if matches:
-            # Mostrar resultados de búsqueda
+            # Mostrar resultados de búsqueda CON FORMATO COMPLETO
             result_text = f"🔍 *Resultados para '{search_term.title()}'*:\n\n"
             
             for i, match in enumerate(matches, 1):
+                # FORMATO COMPLETO: con liga/torneo
                 result_text += f"*{i}. {match['partido']}*\n"
                 result_text += f"🔗 {match['link']}\n\n"
             
@@ -341,12 +359,12 @@ def search_matches(message, search_term):
             result_text = f"❌ *No encontré partidos con '*'{search_term.title()}'*\n\n"
             result_text += "💡 *Sugerencias:*\n"
             result_text += "• Revisa la ortografía\n"
-            result_text += "• Usa términos más generales (ej: 'boca', 'madrid')\n"
+            result_text += "• Usa términos más generales (ej: 'champions', 'liga mx')\n"
             result_text += "• Ver todos los partidos con /partidos"
         
         full_message = result_text + add_search_footer()
         bot.reply_to(message, full_message, parse_mode='Markdown')
-        print(f"🔍 Búsqueda: '{search_term}' → {len(matches)} resultados")
+        print(f"🔍 Búsqueda: '{search_term}' → {len(matches)} resultados (formato completo)")
         
     except Exception as e:
         print(f"Error en búsqueda: {e}")
@@ -374,9 +392,10 @@ def run_bot():
     print("🤖 Bot iniciado en Render - 24/7 activo")
     while True:
         try:
-            bot.polling(none_stop=True, timeout=60)
+            bot.polling(none_stop=True, timeout=60, skip_pending=True)
         except Exception as e:
             print(f"Error: {e}")
+            time.sleep(10)
 
 @app.route('/')
 def home():
