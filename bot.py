@@ -165,8 +165,7 @@ def send_help(message):
 
 📱 *En celular* → usar VPN (desbloquea los links)
 💻 *En PC/TV* → cambiar DNS (arregla pantalla negra)
-
-⚽️ *También puedes:* ver cómo pedir partidos o usar modo incógnito
+⚽️ *También te recomendamos usar modo incógnito*
 
 📝 *Nota:* Si ninguna opción te funciona, puede ser un fallo del proveedor del servidor. Espera un momento y vuelve a intentar.
 
@@ -178,55 +177,81 @@ def send_help(message):
     print("✅ /ayuda enviado con inline keyboard")
 
 # ========================
-# MANEJAR CALLBACKS DE INLINE KEYBOARD
+# MANEJAR CALLBACKS DE INLINE KEYBOARD (VERSIÓN MEJORADA)
 # ========================
 @bot.callback_query_handler(func=lambda call: True)
 def handle_callback(call):
     if call.data == "help_vpn":
         response = """📱 *SOLUCIÓN CELULAR - VPN*
 
+*¿Problema?* ❌ Links bloqueados o no cargan
+
+*Solución:* Usar VPN para desbloquear
+
 1. *Descarga una app VPN gratis:*
-   - Turbo VPN (recomendado)
-   - Windscribe
-   - Hotspot Shield
-   - Cloudflare WARP (1.1.1.1)
+   📲 Turbo VPN (Android/iOS)
+   📲 Windscribe 
+   📲 Hotspot Shield
+   📲 Cloudflare WARP (1.1.1.1)
 
-2. *Conéctate a cualquier servidor*
+2. *Pasos a seguir:*
+   • Abre la app VPN
+   • Toca "Conectar" o "Connect"
+   • Elige cualquier país
+   • Listo ✅ Ahora prueba el link
 
-3. *Intenta ver el partido*
-
-¡Así se desbloquean todos los links! ✅"""
+*Nota:* La VPN evita que tu compañía de internet bloquee los partidos"""
         
     elif call.data == "help_dns":
         response = """💻 *SOLUCIÓN PC/TV - DNS*
 
-*Cambia tus DNS para arreglar pantalla negra:*
+*¿Problema?* ❌ Pantalla negra o "stream no disponible"
 
-1. *DNS Públicos:*
-   - Google: 8.8.8.8 y 8.8.4.4
-   - Cloudflare: 1.1.1.1 y 1.0.0.1
+*Solución:* Cambiar DNS para saltar restricciones
 
-2. *En Windows:* Red → Propiedades → IPv4
-3. *En Android:* WiFi → DNS privado
-4. *En Smart TV:* Configuración de red
+*DNS Recomendados:*
+🔹 Google: 8.8.8.8 y 8.8.4.4
+🔹 Cloudflare: 1.1.1.1 y 1.0.0.1
 
-¡Listo, pantalla negra solucionada! ✅"""
+*¿Cómo cambiar DNS?*
+
+📱 *En Android:*
+   Ajustes → Redes → DNS privado → Ingresa: 1.1.1.1
+
+💻 *En Windows:*
+   Panel Control → Red → Adaptador → Propiedades → IPv4 → Usar DNS
+
+📺 *En Smart TV:*
+   Configuración → Red → DNS manual
+
+🔄 *Reinicia el navegador después de cambiar DNS*"""
         
     elif call.data == "help_incognito":
         response = """🌐 *MODO INCÓGNITO*
 
-*Si tienes problemas, prueba en modo incógnito:*
+*¿Problema?* ❌ Página carga mal o da error
 
-1. *Chrome/Edge:* Ctrl+Shift+N
-2. *Firefox:* Ctrl+Shift+P  
-3. *Safari:* Cmd+Shift+N
+*Solución:* Probar en modo incógnito
 
-*O también:*
-- Limpiar caché del navegador
-- Usar otro navegador
-- Reiniciar el router
+*Pasos rápidos:*
 
-¡Suele solucionar muchos problemas! ✅"""
+📱 *En Chrome/Edge:*
+   • Toca los 3 puntos ⋮
+   • "Nueva pestaña incógnito"
+   • O usa: Ctrl+Shift+N (PC)
+
+📱 *En Firefox:*
+   • Toca los 3 puntos ⋮  
+   • "Nueva pestaña privada"
+   • O usa: Ctrl+Shift+P (PC)
+
+📱 *En Safari:*
+   • Toca los cuadrados []
+   • "Privado"
+   • O usa: Cmd+Shift+N (Mac)
+
+*¿Por qué funciona?*
+El modo incógnito evita problemas de cache, cookies y extensiones que pueden bloquear el stream"""
     
     # Enviar respuesta
     full_response = response + add_footer()
