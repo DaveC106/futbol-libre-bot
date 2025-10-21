@@ -200,7 +200,9 @@ def handle_callback(call):
    • Elige cualquier país
    • Listo ✅ Ahora prueba el link
 
-*Nota:* La VPN evita que tu compañía de internet bloquee los partidos"""
+*Nota:* La VPN evita que tu compañía de internet bloquee los partidos.
+
+💡 *Esta solución es 100% efectiva. Si aún así no te funciona, puede deberse a tu conexión a internet.*"""
         
     elif call.data == "help_dns":
         response = """💻 *SOLUCIÓN PC/TV - DNS*
@@ -224,7 +226,9 @@ def handle_callback(call):
 📺 *En Smart TV:*
    Configuración → Red → DNS manual
 
-🔄 *Reinicia el navegador después de cambiar DNS*"""
+🔄 *Reinicia el navegador después de cambiar DNS*
+
+💡 *Esta solución es 100% efectiva. Si aún así no te funciona, puede deberse a tu conexión a internet.*"""
         
     elif call.data == "help_incognito":
         response = """🌐 *MODO INCÓGNITO*
@@ -251,7 +255,9 @@ def handle_callback(call):
    • O usa: Cmd+Shift+N (Mac)
 
 *¿Por qué funciona?*
-El modo incógnito evita problemas de cache, cookies y extensiones que pueden bloquear el stream"""
+El modo incógnito evita problemas de cache, cookies y extensiones que pueden bloquear el stream.
+
+💡 *Esta solución es 100% efectiva. Si aún así no te funciona, puede deberse a tu conexión a internet.*"""
     
     # Enviar respuesta
     full_response = response + add_footer()
