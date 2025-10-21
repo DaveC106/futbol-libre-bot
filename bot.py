@@ -4,6 +4,7 @@ import threading
 from telebot.types import ReplyKeyboardMarkup, KeyboardButton, InlineKeyboardMarkup, InlineKeyboardButton
 import os
 import re
+import time
 
 TOKEN = "7640481513:AAG9lbUvQGRjLYaHmp91LFKJo3O_YIY7RIw"
 bot = telebot.TeleBot(TOKEN)
@@ -330,7 +331,7 @@ El modo incógnito evita problemas de cache, cookies y extensiones que pueden bl
     bot.answer_callback_query(call.id)
 
 # ========================
-# SISTEMA DE BÚSQUEDA INTELIGENTE (CON FOOTER - FORMATO COMPLETO)
+# SISTEMA DE BÚSQUEDA INTELIGENTE (CON MEJOR MANEJO DE ERRORES)
 # ========================
 def search_matches(message, search_term):
     """Buscar partidos que coincidan con el término de búsqueda"""
@@ -354,21 +355,54 @@ def search_matches(message, search_term):
             
             result_text += f"_📊 Encontré {len(matches)} partido(s)_"
             
+            full_message = result_text + add_search_footer()
+            bot.reply_to(message, full_message, parse_mode='Markdown')
+            print(f"🔍 Búsqueda exitosa: '{search_term}' → {len(matches)} resultados")
+            
         else:
-            # Si no encuentra resultados
+            # Si no encuentra resultados - ESTO NO ES UN ERROR, es normal
             result_text = f"❌ *No encontré partidos con '*'{search_term.title()}'*\n\n"
             result_text += "💡 *Sugerencias:*\n"
             result_text += "• Revisa la ortografía\n"
             result_text += "• Usa términos más generales (ej: 'champions', 'liga mx')\n"
             result_text += "• Ver todos los partidos con /partidos"
-        
-        full_message = result_text + add_search_footer()
-        bot.reply_to(message, full_message, parse_mode='Markdown')
-        print(f"🔍 Búsqueda: '{search_term}' → {len(matches)} resultados (formato completo)")
+            
+            full_message = result_text + add_search_footer()
+            bot.reply_to(message, full_message, parse_mode='Markdown')
+            print(f"🔍 Búsqueda sin resultados: '{search_term}'")
         
     except Exception as e:
-        print(f"Error en búsqueda: {e}")
-        error_message = "❌ Error en la búsqueda. Vuelve a intentar o prueba más tarde." + add_footer()
+        # SOLO mostrar error si es una excepción real, no cuando no encuentra resultados
+        print(f"❌ ERROR REAL en búsqueda: {e}")
+        print(f"🔍 Tipo de error: {type(e).__name__}")
+        
+        # Intentar una vez más antes de mostrar error al usuario
+        try:
+            print("🔄 Reintentando búsqueda...")
+            partidos = PARTIDOS_JSON["partidos"]
+            matches = []
+            
+            for partido in partidos:
+                if search_term in partido['partido'].lower():
+                    matches.append(partido)
+            
+            if matches:
+                result_text = f"🔍 *Resultados para '{search_term.title()}'*:\n\n"
+                for i, match in enumerate(matches, 1):
+                    result_text += f"*{i}. {match['partido']}*\n"
+                    result_text += f"🔗 {match['link']}\n\n"
+                result_text += f"_📊 Encontré {len(matches)} partido(s)_"
+                
+                full_message = result_text + add_search_footer()
+                bot.reply_to(message, full_message, parse_mode='Markdown')
+                print(f"🔍 Búsqueda recuperada: '{search_term}' → {len(matches)} resultados")
+                return
+                
+        except Exception as retry_error:
+            print(f"❌ Error también en reintento: {retry_error}")
+        
+        # Si llegamos aquí, es un error real después de reintentar
+        error_message = "❌ Error temporal en la búsqueda. Vuelve a intentar en un momento." + add_footer()
         bot.reply_to(message, error_message, parse_mode='Markdown')
 
 # ========================
@@ -386,16 +420,29 @@ def handle_all_messages(message):
     search_matches(message, text)
 
 # ========================
-# MANTENER BOT ACTIVO
+# MANTENER BOT ACTIVO (CON MEJOR MANEJO)
 # ========================
 def run_bot():
     print("🤖 Bot iniciado en Render - 24/7 activo")
+    
     while True:
         try:
-            bot.polling(none_stop=True, timeout=60, skip_pending=True)
+            # Timeout más corto para mejor respuesta
+            bot.polling(none_stop=True, timeout=30, skip_pending=True)
+            
         except Exception as e:
-            print(f"Error: {e}")
-            time.sleep(10)
+            error_msg = str(e)
+            print(f"❌ Error en polling: {error_msg}")
+            
+            if "409" in error_msg:
+                print("🚨 CONFLICTO: Otra instancia detectada")
+                time.sleep(30)
+            elif "Timed out" in error_msg or "Timeout" in error_msg:
+                print("⏰ Timeout, reconectando...")
+                time.sleep(5)
+            else:
+                print("🔧 Error genérico, reconectando en 10s...")
+                time.sleep(10)
 
 @app.route('/')
 def home():
