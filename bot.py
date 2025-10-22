@@ -16,120 +16,156 @@ app = Flask(__name__)
 PARTIDOS_JSON = {
   "partidos": [
     {
-      "partido": "UEFA Champions League: Barcelona vs Olympiakos Piraeus",
-      "link": "https://futbolibretv.pages.dev/#partido-26394"
+      "partido": "AFC Champions League Two: Goa vs Al Nassr",
+      "link": "https://futbolibretv.pages.dev/#partido-26445"
     },
     {
-      "partido": "UEFA Champions League: Kairat vs Paphos",
-      "link": "https://futbolibretv.pages.dev/#partido-26395"
+      "partido": "UEFA Champions League: Athletic Club vs Qarabağ",
+      "link": "https://futbolibretv.pages.dev/#partido-26428"
     },
     {
-      "partido": "Eerste Divisie: MVV vs Vitesse",
-      "link": "https://futbolibretv.pages.dev/#partido-26423"
+      "partido": "UEFA Champions League: Galatasaray vs Bodø / Glimt",
+      "link": "https://futbolibretv.pages.dev/#partido-26427"
     },
     {
-      "partido": "Eerste Divisie: Oss vs Ajax II",
-      "link": "https://futbolibretv.pages.dev/#partido-26421"
+      "partido": "Super Lig: Konyaspor vs Beşiktaş",
+      "link": "https://futbolibretv.pages.dev/#partido-26454"
     },
     {
-      "partido": "Eerste Divisie: Den Bosch vs Helmond Sport",
-      "link": "https://futbolibretv.pages.dev/#partido-26422"
+      "partido": "Championship: Watford vs West Bromwich Albion",
+      "link": "https://futbolibretv.pages.dev/#partido-26441"
     },
     {
-      "partido": "AFC Champions League: Al Hilal vs Al Sadd",
-      "link": "https://futbolibretv.pages.dev/#partido-26407"
+      "partido": "Championship: Wrexham vs Oxford United",
+      "link": "https://futbolibretv.pages.dev/#partido-26442"
     },
     {
-      "partido": "UEFA Champions League: PSV vs Napoli",
-      "link": "https://futbolibretv.pages.dev/#partido-26396"
+      "partido": "UEFA Champions League: Real Madrid vs Juventus",
+      "link": "https://futbolibretv.pages.dev/#partido-26431"
     },
     {
-      "partido": "UEFA Champions League: Villarreal vs Manchester City",
-      "link": "https://futbolibretv.pages.dev/#partido-26401"
+      "partido": "UEFA Champions League: Eintracht Frankfurt vs Liverpool",
+      "link": "https://futbolibretv.pages.dev/#partido-26432"
     },
     {
-      "partido": "Copa Mundial Femenina Sub-17 de la FIFA: Noruega vs Ecuador",
-      "link": "https://futbolibretv.pages.dev/#partido-26408"
+      "partido": "UEFA Champions League: Chelsea vs Ajax",
+      "link": "https://futbolibretv.pages.dev/#partido-26433"
     },
     {
-      "partido": "Copa de la División Profesional: Always Ready vs Blooming",
-      "link": "https://futbolibretv.pages.dev/#partido-26418"
+      "partido": "Championship: Sheffield Wednesday vs Middlesbrough",
+      "link": "https://futbolibretv.pages.dev/#partido-26443"
     },
     {
-      "partido": "UEFA Champions League: Union Saint-Gilloise vs Internazionale",
-      "link": "https://futbolibretv.pages.dev/#partido-26397"
+      "partido": "UEFA Champions League: Bayern München vs Club Brugge",
+      "link": "https://futbolibretv.pages.dev/#partido-26429"
     },
     {
-      "partido": "UEFA Champions League: Newcastle United vs Benfica",
-      "link": "https://futbolibretv.pages.dev/#partido-26402"
+      "partido": "UEFA Champions League: Atalanta vs Slavia Praha",
+      "link": "https://futbolibretv.pages.dev/#partido-26434"
     },
     {
-      "partido": "Championship: Bristol City vs Southampton",
-      "link": "https://futbolibretv.pages.dev/#partido-26406"
+      "partido": "Copa Mundial Femenina Sub-17 de la FIFA: Ivory Coast vs Colombia",
+      "link": "https://futbolibretv.pages.dev/#partido-26446"
     },
     {
-      "partido": "UEFA Champions League: Bayer Leverkusen vs PSG",
-      "link": "https://futbolibretv.pages.dev/#partido-26398"
+      "partido": "División Profesional: ABB vs Real Oruro",
+      "link": "https://futbolibretv.pages.dev/#partido-26457"
     },
     {
-      "partido": "UEFA Champions League: Arsenal vs Atlético Madrid",
-      "link": "https://futbolibretv.pages.dev/#partido-26399"
+      "partido": "UEFA Champions League: Monaco vs Tottenham Hotspur",
+      "link": "https://futbolibretv.pages.dev/#partido-26430"
     },
     {
-      "partido": "UEFA Champions League: København vs Borussia Dortmund",
-      "link": "https://futbolibretv.pages.dev/#partido-26400"
+      "partido": "UEFA Champions League: Sporting CP vs Olympique Marseille",
+      "link": "https://futbolibretv.pages.dev/#partido-26435"
     },
     {
-      "partido": "Primera B: Atlético Huila vs Real Cundinamarca",
-      "link": "https://futbolibretv.pages.dev/#partido-26417"
+      "partido": "Major League Soccer: Chicago Fire vs Orlando City SC",
+      "link": "https://futbolibretv.pages.dev/#partido-26455"
     },
     {
-      "partido": "Copa Paraguay: Atlético Tembetary vs 2 de Mayo",
-      "link": "https://futbolibretv.pages.dev/#partido-26424"
+      "partido": "Major League Soccer: Portland Timbers vs Real Salt Lake",
+      "link": "https://futbolibretv.pages.dev/#partido-26456"
     },
     {
-      "partido": "Liga Profesional: Unión Santa Fe vs Defensa y Justicia",
-      "link": "https://futbolibretv.pages.dev/#partido-26403"
+      "partido": "Serie B: Cumbayá vs Atlético Vinotinto",
+      "link": "https://futbolibretv.pages.dev/#partido-26462"
     },
     {
-      "partido": "USL League One: Portland Hearts of Pine vs Spokane Velocity",
-      "link": "https://futbolibretv.pages.dev/#partido-26416"
+      "partido": "Serie B: San Antonio vs Gualaceo",
+      "link": "https://futbolibretv.pages.dev/#partido-26460"
     },
     {
-      "partido": "Primera A: Millonarios vs Atlético Bucaramanga",
-      "link": "https://futbolibretv.pages.dev/#partido-26404"
+      "partido": "Copa Ecuador: Deportivo Cuenca Juniors vs Nueve de Octubre",
+      "link": "https://futbolibretv.pages.dev/#partido-26439"
     },
     {
-      "partido": "Copa de la División Profesional: Real Tomayapo vs Bolívar",
-      "link": "https://futbolibretv.pages.dev/#partido-26419"
+      "partido": "Serie B: Chacaritas vs Vargas Torres",
+      "link": "https://futbolibretv.pages.dev/#partido-26461"
     },
     {
-      "partido": "Copa Sudamericana: Independiente del Valle vs Atlético Mineiro",
-      "link": "https://futbolibretv.pages.dev/#partido-26405"
+      "partido": "Copa Paraguay: Nacional Asunción vs 12 de Octubre",
+      "link": "https://futbolibretv.pages.dev/#partido-26468"
     },
     {
-      "partido": "Copa Colombia: Deportivo Pereira vs Envigado",
-      "link": "https://futbolibretv.pages.dev/#partido-26420"
+      "partido": "Brasileirão: Bahia vs Internacional",
+      "link": "https://futbolibretv.pages.dev/#partido-26437"
     },
     {
-      "partido": "Liga MX: América vs Puebla",
-      "link": "https://futbolibretv.pages.dev/#partido-26412"
+      "partido": "Copa Caribe de la Concacaf: Defence Force vs Mount Pleasant Academy",
+      "link": "https://futbolibretv.pages.dev/#partido-26453"
     },
     {
-      "partido": "Liga MX: Necaxa vs Cruz Azul",
-      "link": "https://futbolibretv.pages.dev/#partido-26413"
+      "partido": "División Profesional: Universitario de Vinto vs Nacional Potosí",
+      "link": "https://futbolibretv.pages.dev/#partido-26458"
     },
     {
-      "partido": "Copa Centroamericana: Cartaginés vs Motagua",
-      "link": "https://futbolibretv.pages.dev/#partido-26409"
+      "partido": "Liga Profesional: Huracán vs Central Córdoba SdE",
+      "link": "https://futbolibretv.pages.dev/#partido-26436"
     },
     {
-      "partido": "Liga MX: Mazatlán vs Santos Laguna",
-      "link": "https://futbolibretv.pages.dev/#partido-26414"
+      "partido": "Copa Paraguay: Guaraní vs River Plate",
+      "link": "https://futbolibretv.pages.dev/#partido-26469"
     },
     {
-      "partido": "Liga MX: Monterrey vs Juárez",
-      "link": "https://futbolibretv.pages.dev/#partido-26415"
+      "partido": "Copa Ecuador: Guayaquil City vs Emelec",
+      "link": "https://futbolibretv.pages.dev/#partido-26440"
+    },
+    {
+      "partido": "Copa Colombia: Atlético Nacional vs Once Caldas",
+      "link": "https://futbolibretv.pages.dev/#partido-26459"
+    },
+    {
+      "partido": "Copa Centroamericana: Sporting San Miguelito vs Plaza Amador",
+      "link": "https://futbolibretv.pages.dev/#partido-26447"
+    },
+    {
+      "partido": "Copa Libertadores: Flamengo vs Racing Club",
+      "link": "https://futbolibretv.pages.dev/#partido-26438"
+    },
+    {
+      "partido": "Liga MX: Querétaro vs Guadalajara",
+      "link": "https://futbolibretv.pages.dev/#partido-26463"
+    },
+    {
+      "partido": "Liga MX: Pachuca vs Tigres UANL",
+      "link": "https://futbolibretv.pages.dev/#partido-26464"
+    },
+    {
+      "partido": "Copa Centroamericana: Real España vs Xelajú",
+      "link": "https://futbolibretv.pages.dev/#partido-26448"
+    },
+    {
+      "partido": "Liga MX: Atlas vs León",
+      "link": "https://futbolibretv.pages.dev/#partido-26466"
+    },
+    {
+      "partido": "Liga MX: Tijuana vs Toluca",
+      "link": "https://futbolibretv.pages.dev/#partido-26465"
+    },
+    {
+      "partido": "Liga MX: Pumas UNAM vs Atlético San Luis",
+      "link": "https://futbolibretv.pages.dev/#partido-26467"
     }
   ]
 }
@@ -198,7 +234,7 @@ def send_matches(message):
                 partidos_text += f"*{i}. {partido_limpio}*\n"
                 partidos_text += f"🔗 {partido['link']}\n\n"
             
-            partidos_text += "_⚠️ Los links pueden requerir buena conexión a internet/VPN/DNS_"
+            partidos_text += "\n\n**Para buscar un partido en específico, escribí directamente el nombre de tu equipo o el de su liga.** ⭐"
         else:
             partidos_text = "❌ *No hay partidos disponibles en este momento.*\n\nIntenta más tarde o usa /ayuda para soporte."
         
