@@ -190,7 +190,7 @@ def formato_completo(partido_completo):
 # ========================
 def add_footer():
     return "\n\n🤔 *¿Quieres hacer algo más?*\nVolver al menú principal /menu"
-    
+
 def add_search_footer():
     return "\n\n🤔 *¿Quieres hacer algo más?*\nBuscar otro partido o /menu"
 
@@ -212,7 +212,7 @@ Soy *FulbiBot*, tu asistente para ver partidos gratis.
 ¡Solo escribe el nombre del equipo o una palabra clave relacionada! ⚡
 
 ¡Elige un comando y disfruta del fútbol! 🎉"""
-    
+
     # SIN FOOTER en start/menu
     bot.reply_to(message, welcome_text, parse_mode='Markdown')
     print(f"✅ /{message.text[1:]} enviado a {user_name}")
@@ -224,24 +224,24 @@ Soy *FulbiBot*, tu asistente para ver partidos gratis.
 def send_matches(message):
     try:
         partidos = PARTIDOS_JSON["partidos"]
-        
+
         if partidos:
             partidos_text = "⚽️ *PARTIDOS DE HOY* ⚽️\n\n"
-            
+
             for i, partido in enumerate(partidos, 1):
                 # FORMATO LIMPIO: solo equipos vs equipos
                 partido_limpio = formato_limpio(partido['partido'])
                 partidos_text += f"*{i}. {partido_limpio}*\n"
                 partidos_text += f"🔗 {partido['link']}\n\n"
-            
+
             partidos_text += "\n\n**Para buscar un partido en específico, escribí directamente el nombre de tu equipo o el de su liga.** ⭐"
         else:
             partidos_text = "❌ *No hay partidos disponibles en este momento.*\n\nIntenta más tarde o usa /ayuda para soporte."
-        
+
         full_message = partidos_text + add_footer()
         bot.reply_to(message, full_message, parse_mode='Markdown')
         print("✅ /partidos enviado (formato limpio)")
-        
+
     except Exception as e:
         print(f"Error en /partidos: {e}")
         error_message = "❌ Error al cargar los partidos. Intenta más tarde." + add_footer()
@@ -259,7 +259,7 @@ def send_help(message):
         InlineKeyboardButton("💻 Solución PC/TV (DNS)", callback_data="help_dns"),
         InlineKeyboardButton("🌐 Modo Incógnito", callback_data="help_incognito")
     )
-    
+
     help_text = """📖 *AYUDA RÁPIDA* 📖
 
 ❌ *¿No puedes ver el partido?*
@@ -272,7 +272,7 @@ def send_help(message):
 📝 *Nota:* Si ninguna opción te funciona, puede ser un fallo del proveedor del servidor. Espera un momento y vuelve a intentar.
 
 👇 *Elige una opción:*"""
-    
+
     full_message = help_text + add_footer()
     bot.send_message(message.chat.id, full_message, 
                     parse_mode='Markdown', reply_markup=keyboard)
@@ -305,7 +305,7 @@ def handle_callback(call):
 *Nota:* La VPN evita que tu compañía de internet bloquee los partidos.
 
 💡 *Esta solución es 100% efectiva. Si aún así no te funciona, puede deberse a tu conexión a internet.*"""
-        
+
     elif call.data == "help_dns":
         response = """💻 *SOLUCIÓN PC/TV - DNS*
 
@@ -331,7 +331,7 @@ def handle_callback(call):
 🔄 *Reinicia el navegador después de cambiar DNS*
 
 💡 *Esta solución es 100% efectiva. Si aún así no te funciona, puede deberse a tu conexión a internet.*"""
-        
+
     elif call.data == "help_incognito":
         response = """🌐 *MODO INCÓGNITO*
 
@@ -360,85 +360,101 @@ def handle_callback(call):
 El modo incógnito evita problemas de cache, cookies y extensiones que pueden bloquear el stream.
 
 💡 *Esta solución es 100% efectiva. Si aún así no te funciona, puede deberse a tu conexión a internet.*"""
-    
+
     # Enviar respuesta
     full_response = response + add_footer()
     bot.send_message(call.message.chat.id, full_response, parse_mode='Markdown')
     bot.answer_callback_query(call.id)
 
 # ========================
-# SISTEMA DE BÚSQUEDA INTELIGENTE (CON MEJOR MANEJO DE ERRORES)
+# SISTEMA DE BÚSQUEDA INTELIGENTE MEJORADO
 # ========================
 def search_matches(message, search_term):
-    """Buscar partidos que coincidan con el término de búsqueda"""
+    """Buscar partidos que coincidan con el término de búsqueda - VERSIÓN MEJORADA"""
     try:
         partidos = PARTIDOS_JSON["partidos"]
         matches = []
         
-        for partido in partidos:
-            # Buscar en el nombre COMPLETO del partido (con liga/torneo)
-            if search_term in partido['partido'].lower():
-                matches.append(partido)
+        # Limpiar y normalizar el término de búsqueda
+        search_clean = re.sub(r'[-–—vsVS]', ' ', search_term)  # Reemplaza "-", "vs", etc. por espacios
+        search_clean = re.sub(r'\s+', ' ', search_clean).strip().lower()  # Normaliza espacios
         
-        if matches:
-            # Mostrar resultados de búsqueda CON FORMATO COMPLETO
-            result_text = f"🔍 *Resultados para '{search_term.title()}'*:\n\n"
+        print(f"🔍 Búsqueda original: '{search_term}' → Normalizada: '{search_clean}'")
+        
+        for partido in partidos:
+            partido_text = partido['partido'].lower()
             
-            for i, match in enumerate(matches, 1):
+            # BUSQUEDA MEJORADA - Múltiples estrategias:
+            
+            # 1. Búsqueda exacta original (para compatibilidad)
+            if search_term in partido_text:
+                matches.append(partido)
+                continue
+                
+            # 2. Búsqueda con términos normalizados
+            if search_clean in partido_text:
+                matches.append(partido)
+                continue
+                
+            # 3. Búsqueda por palabras individuales (si el usuario puso varios equipos)
+            search_words = search_clean.split()
+            if len(search_words) >= 2:
+                # Si el usuario escribió algo como "real madrid juventus"
+                all_words_match = all(word in partido_text for word in search_words)
+                if all_words_match:
+                    matches.append(partido)
+                    continue
+            
+            # 4. Búsqueda flexible para casos como "real madrid - juventus" vs "real madrid vs juventus"
+            partido_clean = re.sub(r'[-–—vsVS:]', ' ', partido_text)  # Limpia el texto del partido también
+            partido_clean = re.sub(r'\s+', ' ', partido_clean).strip()
+            
+            if search_clean in partido_clean:
+                matches.append(partido)
+                continue
+        
+        # Eliminar duplicados por si alguna estrategia encontró el mismo partido múltiples veces
+        unique_matches = []
+        seen_links = set()
+        for match in matches:
+            if match['link'] not in seen_links:
+                unique_matches.append(match)
+                seen_links.add(match['link'])
+        
+        if unique_matches:
+            # Mostrar resultados de búsqueda CON FORMATO COMPLETO
+            result_text = f"🔍 *Resultados para '{search_term}'*:\n\n"
+            
+            for i, match in enumerate(unique_matches, 1):
                 # FORMATO COMPLETO: con liga/torneo
                 result_text += f"*{i}. {match['partido']}*\n"
                 result_text += f"🔗 {match['link']}\n\n"
             
-            result_text += f"_📊 Encontré {len(matches)} partido(s)_"
+            result_text += f"_📊 Encontré {len(unique_matches)} partido(s)_"
             
             full_message = result_text + add_search_footer()
             bot.reply_to(message, full_message, parse_mode='Markdown')
-            print(f"🔍 Búsqueda exitosa: '{search_term}' → {len(matches)} resultados")
+            print(f"🔍 Búsqueda exitosa: '{search_term}' → {len(unique_matches)} resultados")
             
         else:
             # Si no encuentra resultados - ESTO NO ES UN ERROR, es normal
-            result_text = f"❌ *No encontré partidos con '*'{search_term.title()}'*\n\n"
+            result_text = f"❌ *No encontré '*'{search_term}'* en la agenda de hoy*\n\n"
             result_text += "💡 *Sugerencias:*\n"
-            result_text += "• Revisa la ortografía\n"
-            result_text += "• Usa términos más generales (ej: 'champions', 'liga mx')\n"
-            result_text += "• Ver todos los partidos con /partidos"
+            result_text += "• Escribe solo un equipo (ej: 'real madrid')\n"
+            result_text += "• O escribe solo 'champions' para ver todos\n"
+            result_text += "• Usa /partidos para ver toda la agenda\n\n"
+            result_text += "⚽ *Equipos disponibles hoy:* Real Madrid, Juventus, Barcelona, Liverpool, etc."
             
             full_message = result_text + add_search_footer()
             bot.reply_to(message, full_message, parse_mode='Markdown')
             print(f"🔍 Búsqueda sin resultados: '{search_term}'")
         
     except Exception as e:
-        # SOLO mostrar error si es una excepción real, no cuando no encuentra resultados
+        # SOLO mostrar error si es una excepción real
         print(f"❌ ERROR REAL en búsqueda: {e}")
-        print(f"🔍 Tipo de error: {type(e).__name__}")
         
-        # Intentar una vez más antes de mostrar error al usuario
-        try:
-            print("🔄 Reintentando búsqueda...")
-            partidos = PARTIDOS_JSON["partidos"]
-            matches = []
-            
-            for partido in partidos:
-                if search_term in partido['partido'].lower():
-                    matches.append(partido)
-            
-            if matches:
-                result_text = f"🔍 *Resultados para '{search_term.title()}'*:\n\n"
-                for i, match in enumerate(matches, 1):
-                    result_text += f"*{i}. {match['partido']}*\n"
-                    result_text += f"🔗 {match['link']}\n\n"
-                result_text += f"_📊 Encontré {len(matches)} partido(s)_"
-                
-                full_message = result_text + add_search_footer()
-                bot.reply_to(message, full_message, parse_mode='Markdown')
-                print(f"🔍 Búsqueda recuperada: '{search_term}' → {len(matches)} resultados")
-                return
-                
-        except Exception as retry_error:
-            print(f"❌ Error también en reintento: {retry_error}")
-        
-        # Si llegamos aquí, es un error real después de reintentar
-        error_message = "❌ Error temporal en la búsqueda. Vuelve a intentar en un momento." + add_footer()
+        # Si hay error, mostrar mensaje simple
+        error_message = "❌ Error temporal. Intenta con términos más simples como 'real madrid' o 'juventus'." + add_footer()
         bot.reply_to(message, error_message, parse_mode='Markdown')
 
 # ========================
@@ -447,11 +463,11 @@ def search_matches(message, search_term):
 @bot.message_handler(func=lambda message: True)
 def handle_all_messages(message):
     text = message.text.strip().lower()
-    
+
     # Si es un comando conocido, manejarlo primero
     if text in ["/start", "/partidos", "/ayuda", "/menu"]:
         return
-    
+
     # Si no es comando, es una búsqueda
     search_matches(message, text)
 
@@ -460,16 +476,16 @@ def handle_all_messages(message):
 # ========================
 def run_bot():
     print("🤖 Bot iniciado en Render - 24/7 activo")
-    
+
     while True:
         try:
             # Timeout más corto para mejor respuesta
             bot.polling(none_stop=True, timeout=30, skip_pending=True)
-            
+
         except Exception as e:
             error_msg = str(e)
             print(f"❌ Error en polling: {error_msg}")
-            
+
             if "409" in error_msg:
                 print("🚨 CONFLICTO: Otra instancia detectada")
                 time.sleep(30)
@@ -490,7 +506,7 @@ if __name__ == "__main__":
     bot_thread = threading.Thread(target=run_bot)
     bot_thread.daemon = True
     bot_thread.start()
-    
+
     # Web server
     port = int(os.environ.get('PORT', 10000))
     app.run(host='0.0.0.0', port=port)
