@@ -6,7 +6,10 @@ import os
 import re
 import time
 
-TOKEN = "7640481513:AAG9lbUvQGRjLYaHmp91LFKJo3O_YIY7RIw"
+TOKEN = os.environ.get('BOT_TOKEN')
+if not TOKEN:
+    raise ValueError("❌ BOT_TOKEN no encontrado en variables de entorno")
+
 bot = telebot.TeleBot(TOKEN)
 app = Flask(__name__)
 
