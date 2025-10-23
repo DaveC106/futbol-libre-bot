@@ -14,7 +14,7 @@ bot = telebot.TeleBot(TOKEN)
 app = Flask(__name__)
 
 # ========================
-# PARTIDOS DIRECTAMENTE EN EL CÓDIGO
+# PARTIDOS DIRECTAMENTE EN EL CÓDIGO.
 # ========================
 PARTIDOS_JSON = {
   "partidos": [
