@@ -16,156 +16,196 @@ app = Flask(__name__)
 PARTIDOS_JSON = {
   "partidos": [
     {
-      "partido": "AFC Champions League Two: Goa vs Al Nassr",
-      "link": "https://futbolibretv.pages.dev/#partido-26445"
+      "partido": "UEFA Europa League: FCSB vs Bologna",
+      "link": "https://futbolibretv.pages.dev/#partido-26474"
     },
     {
-      "partido": "UEFA Champions League: Athletic Club vs Qarabağ",
-      "link": "https://futbolibretv.pages.dev/#partido-26428"
+      "partido": "UEFA Europa League: Salzburg vs Ferencváros",
+      "link": "https://futbolibretv.pages.dev/#partido-26477"
     },
     {
-      "partido": "UEFA Champions League: Galatasaray vs Bodø / Glimt",
-      "link": "https://futbolibretv.pages.dev/#partido-26427"
+      "partido": "UEFA Europa League: Feyenoord vs Panathinaikos",
+      "link": "https://futbolibretv.pages.dev/#partido-26478"
     },
     {
-      "partido": "Super Lig: Konyaspor vs Beşiktaş",
-      "link": "https://futbolibretv.pages.dev/#partido-26454"
+      "partido": "UEFA Conference League: Drita vs Omonia Nicosia",
+      "link": "https://futbolibretv.pages.dev/#partido-26491"
     },
     {
-      "partido": "Championship: Watford vs West Bromwich Albion",
-      "link": "https://futbolibretv.pages.dev/#partido-26441"
+      "partido": "UEFA Conference League: Strasbourg vs Jagiellonia Białystok",
+      "link": "https://futbolibretv.pages.dev/#partido-26495"
     },
     {
-      "partido": "Championship: Wrexham vs Oxford United",
-      "link": "https://futbolibretv.pages.dev/#partido-26442"
+      "partido": "UEFA Europa League: Brann vs Rangers",
+      "link": "https://futbolibretv.pages.dev/#partido-26472"
     },
     {
-      "partido": "UEFA Champions League: Real Madrid vs Juventus",
-      "link": "https://futbolibretv.pages.dev/#partido-26431"
+      "partido": "UEFA Europa League: Sporting Braga vs Crvena Zvezda",
+      "link": "https://futbolibretv.pages.dev/#partido-26475"
     },
     {
-      "partido": "UEFA Champions League: Eintracht Frankfurt vs Liverpool",
-      "link": "https://futbolibretv.pages.dev/#partido-26432"
+      "partido": "UEFA Europa League: Go Ahead Eagles vs Aston Villa",
+      "link": "https://futbolibretv.pages.dev/#partido-26480"
     },
     {
-      "partido": "UEFA Champions League: Chelsea vs Ajax",
-      "link": "https://futbolibretv.pages.dev/#partido-26433"
+      "partido": "UEFA Conference League: Shakhtar Donetsk vs Legia Warszawa",
+      "link": "https://futbolibretv.pages.dev/#partido-26492"
     },
     {
-      "partido": "Championship: Sheffield Wednesday vs Middlesbrough",
-      "link": "https://futbolibretv.pages.dev/#partido-26443"
+      "partido": "UEFA Conference League: Rijeka vs Sparta Praha",
+      "link": "https://futbolibretv.pages.dev/#partido-26496"
     },
     {
-      "partido": "UEFA Champions League: Bayern München vs Club Brugge",
-      "link": "https://futbolibretv.pages.dev/#partido-26429"
+      "partido": "UEFA Conference League: Häcken vs Rayo Vallecano",
+      "link": "https://futbolibretv.pages.dev/#partido-26498"
     },
     {
-      "partido": "UEFA Champions League: Atalanta vs Slavia Praha",
-      "link": "https://futbolibretv.pages.dev/#partido-26434"
+      "partido": "UEFA Europa League: Fenerbahçe vs Stuttgart",
+      "link": "https://futbolibretv.pages.dev/#partido-26473"
     },
     {
-      "partido": "Copa Mundial Femenina Sub-17 de la FIFA: Ivory Coast vs Colombia",
-      "link": "https://futbolibretv.pages.dev/#partido-26446"
+      "partido": "UEFA Europa League: Olympique Lyonnais vs Basel",
+      "link": "https://futbolibretv.pages.dev/#partido-26476"
     },
     {
-      "partido": "División Profesional: ABB vs Real Oruro",
-      "link": "https://futbolibretv.pages.dev/#partido-26457"
+      "partido": "UEFA Europa League: Genk vs Real Betis",
+      "link": "https://futbolibretv.pages.dev/#partido-26479"
     },
     {
-      "partido": "UEFA Champions League: Monaco vs Tottenham Hotspur",
-      "link": "https://futbolibretv.pages.dev/#partido-26430"
+      "partido": "UEFA Conference League: AEK Athens vs Aberdeen",
+      "link": "https://futbolibretv.pages.dev/#partido-26490"
     },
     {
-      "partido": "UEFA Champions League: Sporting CP vs Olympique Marseille",
-      "link": "https://futbolibretv.pages.dev/#partido-26435"
+      "partido": "UEFA Conference League: Škendija 79 vs Shelbourne",
+      "link": "https://futbolibretv.pages.dev/#partido-26493"
     },
     {
-      "partido": "Major League Soccer: Chicago Fire vs Orlando City SC",
-      "link": "https://futbolibretv.pages.dev/#partido-26455"
+      "partido": "UEFA Conference League: Rapid Wien vs Fiorentina",
+      "link": "https://futbolibretv.pages.dev/#partido-26494"
     },
     {
-      "partido": "Major League Soccer: Portland Timbers vs Real Salt Lake",
-      "link": "https://futbolibretv.pages.dev/#partido-26456"
+      "partido": "UEFA Conference League: Breidablik vs KuPS",
+      "link": "https://futbolibretv.pages.dev/#partido-26497"
     },
     {
-      "partido": "Serie B: Cumbayá vs Atlético Vinotinto",
-      "link": "https://futbolibretv.pages.dev/#partido-26462"
+      "partido": "UEFA Conference League: Crystal Palace vs AEK Larnaca",
+      "link": "https://futbolibretv.pages.dev/#partido-26501"
     },
     {
-      "partido": "Serie B: San Antonio vs Gualaceo",
-      "link": "https://futbolibretv.pages.dev/#partido-26460"
+      "partido": "UEFA Conference League: Mainz 05 vs Zrinjski",
+      "link": "https://futbolibretv.pages.dev/#partido-26503"
     },
     {
-      "partido": "Copa Ecuador: Deportivo Cuenca Juniors vs Nueve de Octubre",
-      "link": "https://futbolibretv.pages.dev/#partido-26439"
+      "partido": "UEFA Conference League: Sigma Olomouc vs Raków Częstochowa",
+      "link": "https://futbolibretv.pages.dev/#partido-26505"
     },
     {
-      "partido": "Serie B: Chacaritas vs Vargas Torres",
-      "link": "https://futbolibretv.pages.dev/#partido-26461"
+      "partido": "League One: Exeter City vs Plymouth Argyle",
+      "link": "https://futbolibretv.pages.dev/#partido-26511"
     },
     {
-      "partido": "Copa Paraguay: Nacional Asunción vs 12 de Octubre",
-      "link": "https://futbolibretv.pages.dev/#partido-26468"
+      "partido": "División Profesional: Oriente Petrolero vs Wilstermann",
+      "link": "https://futbolibretv.pages.dev/#partido-26514"
     },
     {
-      "partido": "Brasileirão: Bahia vs Internacional",
-      "link": "https://futbolibretv.pages.dev/#partido-26437"
+      "partido": "UEFA Europa League: Lille vs PAOK",
+      "link": "https://futbolibretv.pages.dev/#partido-26483"
     },
     {
-      "partido": "Copa Caribe de la Concacaf: Defence Force vs Mount Pleasant Academy",
-      "link": "https://futbolibretv.pages.dev/#partido-26453"
+      "partido": "UEFA Europa League: Maccabi Tel Aviv vs Midtjylland",
+      "link": "https://futbolibretv.pages.dev/#partido-26484"
     },
     {
-      "partido": "División Profesional: Universitario de Vinto vs Nacional Potosí",
-      "link": "https://futbolibretv.pages.dev/#partido-26458"
+      "partido": "UEFA Europa League: Young Boys vs Ludogorets",
+      "link": "https://futbolibretv.pages.dev/#partido-26488"
     },
     {
-      "partido": "Liga Profesional: Huracán vs Central Córdoba SdE",
-      "link": "https://futbolibretv.pages.dev/#partido-26436"
+      "partido": "UEFA Conference League: Samsunspor vs Dynamo Kyiv",
+      "link": "https://futbolibretv.pages.dev/#partido-26499"
     },
     {
-      "partido": "Copa Paraguay: Guaraní vs River Plate",
-      "link": "https://futbolibretv.pages.dev/#partido-26469"
+      "partido": "UEFA Conference League: Hamrun Spartans vs Lausanne Sport",
+      "link": "https://futbolibretv.pages.dev/#partido-26502"
     },
     {
-      "partido": "Copa Ecuador: Guayaquil City vs Emelec",
-      "link": "https://futbolibretv.pages.dev/#partido-26440"
+      "partido": "UEFA Conference League: Lincoln Red Imps vs Lech Poznań",
+      "link": "https://futbolibretv.pages.dev/#partido-26506"
     },
     {
-      "partido": "Copa Colombia: Atlético Nacional vs Once Caldas",
-      "link": "https://futbolibretv.pages.dev/#partido-26459"
+      "partido": "UEFA Conference League: AZ vs Slovan Bratislava",
+      "link": "https://futbolibretv.pages.dev/#partido-26507"
     },
     {
-      "partido": "Copa Centroamericana: Sporting San Miguelito vs Plaza Amador",
-      "link": "https://futbolibretv.pages.dev/#partido-26447"
+      "partido": "UEFA Europa League: Freiburg vs Utrecht",
+      "link": "https://futbolibretv.pages.dev/#partido-26481"
     },
     {
-      "partido": "Copa Libertadores: Flamengo vs Racing Club",
-      "link": "https://futbolibretv.pages.dev/#partido-26438"
+      "partido": "UEFA Europa League: Nottingham Forest vs Porto",
+      "link": "https://futbolibretv.pages.dev/#partido-26485"
     },
     {
-      "partido": "Liga MX: Querétaro vs Guadalajara",
-      "link": "https://futbolibretv.pages.dev/#partido-26463"
+      "partido": "UEFA Europa League: Roma vs Viktoria Plzeň",
+      "link": "https://futbolibretv.pages.dev/#partido-26486"
     },
     {
-      "partido": "Liga MX: Pachuca vs Tigres UANL",
-      "link": "https://futbolibretv.pages.dev/#partido-26464"
+      "partido": "UEFA Europa League: Celta de Vigo vs Nice",
+      "link": "https://futbolibretv.pages.dev/#partido-26489"
     },
     {
-      "partido": "Copa Centroamericana: Real España vs Xelajú",
-      "link": "https://futbolibretv.pages.dev/#partido-26448"
+      "partido": "UEFA Conference League: Shamrock Rovers vs Celje",
+      "link": "https://futbolibretv.pages.dev/#partido-26500"
     },
     {
-      "partido": "Liga MX: Atlas vs León",
-      "link": "https://futbolibretv.pages.dev/#partido-26466"
+      "partido": "UEFA Conference League: CSU Craiova vs Noah",
+      "link": "https://futbolibretv.pages.dev/#partido-26504"
     },
     {
-      "partido": "Liga MX: Tijuana vs Toluca",
-      "link": "https://futbolibretv.pages.dev/#partido-26465"
+      "partido": "UEFA Europa League: Malmö FF vs Dinamo Zagreb",
+      "link": "https://futbolibretv.pages.dev/#partido-26482"
     },
     {
-      "partido": "Liga MX: Pumas UNAM vs Atlético San Luis",
-      "link": "https://futbolibretv.pages.dev/#partido-26467"
+      "partido": "UEFA Europa League: Celtic vs Sturm Graz",
+      "link": "https://futbolibretv.pages.dev/#partido-26487"
+    },
+    {
+      "partido": "Copa Paraguay: Cerro Porteño vs General Caballero JLM",
+      "link": "https://futbolibretv.pages.dev/#partido-26516"
+    },
+    {
+      "partido": "Copa Sudamericana: Universidad Chile vs Lanús",
+      "link": "https://futbolibretv.pages.dev/#partido-26508"
+    },
+    {
+      "partido": "Copa Caribe de la Concacaf: Universidad O&M vs Cibao",
+      "link": "https://futbolibretv.pages.dev/#partido-26513"
+    },
+    {
+      "partido": "Amistoso Internacional Femenino: EE. UU. vs Portugal",
+      "link": "https://futbolibretv.pages.dev/#partido-26517"
+    },
+    {
+      "partido": "División Profesional: Gualberto Villarroel SJ vs The Strongest",
+      "link": "https://futbolibretv.pages.dev/#partido-26515"
+    },
+    {
+      "partido": "Copa Argentina: Belgrano vs Argentinos Juniors",
+      "link": "https://futbolibretv.pages.dev/#partido-26510"
+    },
+    {
+      "partido": "Copa Libertadores: LDU Quito vs Palmeiras",
+      "link": "https://futbolibretv.pages.dev/#partido-26509"
+    },
+    {
+      "partido": "Liga 1: Sporting Cristal vs Universitario",
+      "link": "https://futbolibretv.pages.dev/#partido-26471"
+    },
+    {
+      "partido": "Copa Centroamericana: Alajuelense vs Olimpia",
+      "link": "https://futbolibretv.pages.dev/#partido-26512"
+    },
+    {
+      "partido": "Amistoso Internacional Femenino: México vs Nueva Zelanda",
+      "link": "https://futbolibretv.pages.dev/#partido-26518"
     }
   ]
 }
