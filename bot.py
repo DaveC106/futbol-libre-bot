@@ -206,7 +206,7 @@ def send_matches(message):
                 partido_limpio = formato_limpio(partido['partido'])
                 partidos_text += f"*{i}. {partido_limpio}*\n"
                 partidos_text += f"🔗 {partido['link']}\n\n"
-            partidos_text += "\n\n**Para buscar un partido en específico, escribí directamente el nombre de tu equipo o el de su liga.** ⭐"
+            partidos_text += "\n\n**Para buscar un partido en específico, escribe directamente el nombre de tu equipo o el de su liga.** ⭐"
         else:
             partidos_text = "❌ *No hay partidos disponibles en este momento.*\n\nIntenta más tarde o usa /ayuda para soporte."
 
