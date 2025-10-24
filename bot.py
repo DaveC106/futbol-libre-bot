@@ -164,16 +164,16 @@ PARTIDOS_JSON = {
     }
   ]
 }
+
 # ========================
 # FUNCIONES PARA FORMATEAR PARTIDOS
 # ========================
 def formato_limpio(partido_completo):
     """Quita la liga/torneo, deja solo equipos vs equipos"""
-    # Busca el patron "liga: equipo vs equipo"
     match = re.search(r':\s*(.+)', partido_completo)
     if match:
-        return match.group(1).strip()  # Solo "equipo vs equipo"
-    return partido_completo  # Si no encuentra ":", devuelve completo
+        return match.group(1).strip()
+    return partido_completo
 
 def formato_completo(partido_completo):
     """Mantiene el formato completo con liga/torneo"""
@@ -207,7 +207,6 @@ Soy *FulbiBot*, tu asistente para ver partidos gratis.
 
 ¡Elige un comando y disfruta del fútbol! 🎉"""
 
-    # SIN FOOTER en start/menu
     bot.reply_to(message, welcome_text, parse_mode='Markdown')
     print(f"✅ /{message.text[1:]} enviado a {user_name}")
 
@@ -223,7 +222,6 @@ def send_matches(message):
             partidos_text = "⚽️ *PARTIDOS DE HOY* ⚽️\n\n"
 
             for i, partido in enumerate(partidos, 1):
-                # FORMATO LIMPIO: solo equipos vs equipos
                 partido_limpio = formato_limpio(partido['partido'])
                 partidos_text += f"*{i}. {partido_limpio}*\n"
                 partidos_text += f"🔗 {partido['link']}\n\n"
@@ -246,7 +244,6 @@ def send_matches(message):
 # ========================
 @bot.message_handler(commands=['ayuda'])
 def send_help(message):
-    # Crear inline keyboard con botones uno encima del otro (row_width=1)
     keyboard = InlineKeyboardMarkup(row_width=1)
     keyboard.add(
         InlineKeyboardButton("📱 Solución Celular (VPN)", callback_data="help_vpn"),
@@ -296,9 +293,7 @@ def handle_callback(call):
    • Elige cualquier país
    • Listo ✅ Ahora prueba el link
 
-*Nota:* La VPN evita que tu compañía de internet bloquee los partidos.
-
-💡 *Esta solución es 100% efectiva. Si aún así no te funciona, puede deberse a tu conexión a internet.*"""
+*Nota:* La VPN evita que tu compañía de internet bloquee los partidos."""
 
     elif call.data == "help_dns":
         response = """💻 *SOLUCIÓN PC/TV - DNS*
@@ -322,9 +317,7 @@ def handle_callback(call):
 📺 *En Smart TV:*
    Configuración → Red → DNS manual
 
-🔄 *Reinicia el navegador después de cambiar DNS*
-
-💡 *Esta solución es 100% efectiva. Si aún así no te funciona, puede deberse a tu conexión a internet.*"""
+🔄 *Reinicia el navegador después de cambiar DNS*"""
 
     elif call.data == "help_incognito":
         response = """🌐 *MODO INCÓGNITO*
@@ -351,20 +344,17 @@ def handle_callback(call):
    • O usa: Cmd+Shift+N (Mac)
 
 *¿Por qué funciona?*
-El modo incógnito evita problemas de cache, cookies y extensiones que pueden bloquear el stream.
+El modo incógnito evita problemas de cache, cookies y extensiones que pueden bloquear el stream."""
 
-💡 *Esta solución es 100% efectiva. Si aún así no te funciona, puede deberse a tu conexión a internet.*"""
-
-    # Enviar respuesta
     full_response = response + add_footer()
     bot.send_message(call.message.chat.id, full_response, parse_mode='Markdown')
     bot.answer_callback_query(call.id)
 
 # ========================
-# SISTEMA DE BÚSQUEDA INTELIGENTE MEJORADO
+# SISTEMA DE BÚSQUEDA INTELIGENTE MEJORADO - VERSIÓN CORREGIDA
 # ========================
 def search_matches(message, search_term):
-    """Buscar partidos que coincidan con el término de búsqueda - VERSIÓN BALANCEADA"""
+    """Buscar partidos que coincidan con el término de búsqueda - VERSIÓN CORREGIDA"""
     try:
         partidos = PARTIDOS_JSON["partidos"]
         matches = []
@@ -372,47 +362,52 @@ def search_matches(message, search_term):
         search_clean = re.sub(r'[-–—vsVS]', ' ', search_term)
         search_clean = re.sub(r'\s+', ' ', search_clean).strip().lower()
         
-        print(f"🔍 Búsqueda original: '{search_term}' → Normalizada: '{search_clean}'")
+        print(f"🔍 Búsqueda: '{search_term}' → '{search_clean}'")
         
         for partido in partidos:
             partido_text = partido['partido'].lower()
             
             # SEPARAR LIGA Y EQUIPOS
             if ":" in partido_text:
-                liga = partido_text.split(":")[0].strip()  # Ej: "premier league"
-                equipos = partido_text.split(":")[1].strip()  # Ej: "leeds united vs west ham united"
+                liga = partido_text.split(":")[0].strip()
+                equipos = partido_text.split(":")[1].strip()
             else:
                 liga = ""
                 equipos = partido_text
             
-            # ESTRATEGIAS DE BÚSQUEDA BALANCEADAS:
-            
-            # 1. Búsqueda en LIGA (más permisiva)
+            # 1. Búsqueda en LIGA (permisiva)
             if search_clean in liga:
                 matches.append(partido)
                 continue
                 
-            # 2. Búsqueda en EQUIPOS (más estricta)
-            search_words = search_clean.split()
-            if len(search_words) == 1:
-                # Una palabra: buscar como palabra completa en equipos
-                if re.search(r'\b' + re.escape(search_clean) + r'\b', equipos):
-                    matches.append(partido)
-                    continue
-            else:
-                # Múltiples palabras: buscar que TODAS estén en equipos
-                all_words_match = all(re.search(r'\b' + re.escape(word) + r'\b', equipos) for word in search_words)
-                if all_words_match:
-                    matches.append(partido)
-                    continue
+            # 2. Búsqueda en EQUIPOS (corregida - palabras completas)
+            equipos_list = re.split(r' vs | - ', equipos)
+            encontrado = False
             
-            # 3. Búsqueda flexible para nombres cortos (ej: "sev" → "sevilla")
+            for equipo in equipos_list:
+                equipo_limpio = equipo.strip()
+                # Buscar palabra completa O si la búsqueda es el final del equipo
+                if (re.search(r'\b' + re.escape(search_clean) + r'\b', equipo_limpio) or 
+                    equipo_limpio.endswith(' ' + search_clean) or
+                    equipo_limpio == search_clean):
+                    encontrado = True
+                    break
+            
+            if encontrado:
+                matches.append(partido)
+                continue
+            
+            # 3. Búsqueda flexible para nombres cortos (solo si 3+ caracteres)
             if len(search_clean) >= 3:
-                equipos_list = re.split(r' vs | - ', equipos)
                 for equipo in equipos_list:
                     equipo_limpio = equipo.strip()
-                    if search_clean in equipo_limpio and any(palabra.startswith(search_clean) for palabra in equipo_limpio.split()):
-                        matches.append(partido)
+                    palabras_equipo = equipo_limpio.split()
+                    for palabra in palabras_equipo:
+                        if palabra.startswith(search_clean):
+                            matches.append(partido)
+                            encontrado = True
+                            break
+                    if encontrado:
                         break
         
         # Eliminar duplicados
@@ -420,7 +415,7 @@ def search_matches(message, search_term):
         seen_links = set()
         for match in matches:
             if match['link'] not in seen_links:
-                unique_matches.append(match)
+                unique_matches.append(mmatch)
                 seen_links.add(match['link'])
         
         if unique_matches:
@@ -459,11 +454,9 @@ def search_matches(message, search_term):
 def handle_all_messages(message):
     text = message.text.strip().lower()
 
-    # Si es un comando conocido, manejarlo primero
     if text in ["/start", "/partidos", "/ayuda", "/menu"]:
         return
 
-    # Si no es comando, es una búsqueda
     search_matches(message, text)
 
 # ========================
@@ -474,7 +467,6 @@ def run_bot():
 
     while True:
         try:
-            # Timeout más corto para mejor respuesta
             bot.polling(none_stop=True, timeout=30, skip_pending=True)
 
         except Exception as e:
@@ -497,11 +489,9 @@ def home():
 
 # Iniciar todo
 if __name__ == "__main__":
-    # Bot en hilo separado
     bot_thread = threading.Thread(target=run_bot)
     bot_thread.daemon = True
     bot_thread.start()
 
-    # Web server
     port = int(os.environ.get('PORT', 10000))
     app.run(host='0.0.0.0', port=port)
