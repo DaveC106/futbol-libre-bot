@@ -19,36 +19,151 @@ app = Flask(__name__)
 PARTIDOS_JSON = {
   "partidos": [
     {
-      "partido": "Amistoso Internacional Femenino: EE. UU. vs Portugal",
-      "link": "https://futbolibretv.pages.dev/#partido-26517"
+      "partido": "Copa Mundial Femenina Sub-17 de la FIFA: Ecuador vs China PR",
+      "link": "https://futbolibretv.pages.dev/#partido-26539"
     },
     {
-      "partido": "División Profesional: Gualberto Villarroel SJ vs The Strongest",
-      "link": "https://futbolibretv.pages.dev/#partido-26515"
+      "partido": "UEFA Nations League Femenina: Alemania vs Francia",
+      "link": "https://futbolibretv.pages.dev/#partido-26540"
     },
     {
-      "partido": "Copa Argentina: Belgrano vs Argentinos Juniors",
-      "link": "https://futbolibretv.pages.dev/#partido-26510"
+      "partido": "2. Bundesliga: Schalke 04 vs Darmstadt 98",
+      "link": "https://futbolibretv.pages.dev/#partido-26537"
     },
     {
-      "partido": "Copa Libertadores: LDU Quito vs Palmeiras",
-      "link": "https://futbolibretv.pages.dev/#partido-26509"
+      "partido": "2. Bundesliga: Greuther Fürth vs Karlsruher SC",
+      "link": "https://futbolibretv.pages.dev/#partido-26538"
     },
     {
-      "partido": "Liga 1: Sporting Cristal vs Universitario",
-      "link": "https://futbolibretv.pages.dev/#partido-26471"
+      "partido": "Eredivisie: Heerenveen vs NAC Breda",
+      "link": "https://futbolibretv.pages.dev/#partido-26549"
     },
     {
-      "partido": "Copa Centroamericana: Alajuelense vs Olimpia",
-      "link": "https://futbolibretv.pages.dev/#partido-26512"
+      "partido": "Eerste Divisie: Vitesse vs Roda JC",
+      "link": "https://futbolibretv.pages.dev/#partido-26550"
     },
     {
-      "partido": "Amistoso Internacional Femenino: México vs Nueva Zelanda",
-      "link": "https://futbolibretv.pages.dev/#partido-26518"
+      "partido": "Pro League: Al Ittihad vs Al Hilal",
+      "link": "https://futbolibretv.pages.dev/#partido-26551"
+    },
+    {
+      "partido": "UEFA Nations League Femenina: España vs Suecia",
+      "link": "https://futbolibretv.pages.dev/#partido-26541"
+    },
+    {
+      "partido": "Bundesliga: Werder Bremen vs Union Berlin",
+      "link": "https://futbolibretv.pages.dev/#partido-26525"
+    },
+    {
+      "partido": "LaLiga SmartBank: Huesca vs Las Palmas",
+      "link": "https://futbolibretv.pages.dev/#partido-26556"
+    },
+    {
+      "partido": "Ligue 1: Paris vs Nantes",
+      "link": "https://futbolibretv.pages.dev/#partido-26526"
+    },
+    {
+      "partido": "Serie A: Milan vs Pisa",
+      "link": "https://futbolibretv.pages.dev/#partido-26524"
+    },
+    {
+      "partido": "Premier League: Leeds United vs West Ham United",
+      "link": "https://futbolibretv.pages.dev/#partido-26522"
+    },
+    {
+      "partido": "LaLiga: Real Sociedad vs Sevilla",
+      "link": "https://futbolibretv.pages.dev/#partido-26523"
+    },
+    {
+      "partido": "Liga Profesional: Sarmiento vs Rosario Central",
+      "link": "https://futbolibretv.pages.dev/#partido-26527"
+    },
+    {
+      "partido": "Liga 1: Juan Pablo II College vs Comerciantes Unidos",
+      "link": "https://futbolibretv.pages.dev/#partido-26521"
+    },
+    {
+      "partido": "Primera División: Palestino vs Everton",
+      "link": "https://futbolibretv.pages.dev/#partido-26529"
+    },
+    {
+      "partido": "CONMEBOL Nations League Femenina: Amazon Prime Video, ViX",
+      "link": "https://futbolibretv.pages.dev/#partido-26552"
+    },
+    {
+      "partido": "Primera A: Alianza vs La Equidad",
+      "link": "https://futbolibretv.pages.dev/#partido-26530"
+    },
+    {
+      "partido": "CONMEBOL Nations League Femenina: Venezuela vs Chile",
+      "link": "https://futbolibretv.pages.dev/#partido-26553"
+    },
+    {
+      "partido": "Liga Profesional: Independiente vs Platense",
+      "link": "https://futbolibretv.pages.dev/#partido-26528"
+    },
+    {
+      "partido": "Serie B: Novorizontino vs Botafogo SP",
+      "link": "https://futbolibretv.pages.dev/#partido-26544"
+    },
+    {
+      "partido": "Primera División: Defensor Sporting vs Torque",
+      "link": "https://futbolibretv.pages.dev/#partido-26535"
+    },
+    {
+      "partido": "Primera A: Fortaleza CEIF vs Deportivo Pasto",
+      "link": "https://futbolibretv.pages.dev/#partido-26531"
+    },
+    {
+      "partido": "CONMEBOL Nations League Femenina: Colombia vs Perú",
+      "link": "https://futbolibretv.pages.dev/#partido-26555"
+    },
+    {
+      "partido": "CONMEBOL Nations League Femenina: Argentina vs Paraguay",
+      "link": "https://futbolibretv.pages.dev/#partido-26554"
+    },
+    {
+      "partido": "Serie A: Orense vs Universidad Católica",
+      "link": "https://futbolibretv.pages.dev/#partido-26534"
+    },
+    {
+      "partido": "Major League Soccer: Inter Miami vs Nashville SC",
+      "link": "https://futbolibretv.pages.dev/#partido-26543"
+    },
+    {
+      "partido": "Serie B: Cuiabá vs Remo",
+      "link": "https://futbolibretv.pages.dev/#partido-26545"
+    },
+    {
+      "partido": "Liga de Expansión MX: Alebrijes de Oaxaca vs Tepatitlán",
+      "link": "https://futbolibretv.pages.dev/#partido-26542"
+    },
+    {
+      "partido": "Primera División: San Carlos vs Guadalupe",
+      "link": "https://futbolibretv.pages.dev/#partido-26546"
+    },
+    {
+      "partido": "Liga MX: Juárez vs Puebla",
+      "link": "https://futbolibretv.pages.dev/#partido-26547"
+    },
+    {
+      "partido": "Primera A: Deportivo Pereira vs Rionegro Águilas",
+      "link": "https://futbolibretv.pages.dev/#partido-26533"
+    },
+    {
+      "partido": "Copa Argentina: Independiente Rivadavia vs River Plate",
+      "link": "https://futbolibretv.pages.dev/#partido-26536"
+    },
+    {
+      "partido": "Primera A: América de Cali vs Junior",
+      "link": "https://futbolibretv.pages.dev/#partido-26532"
+    },
+    {
+      "partido": "Liga MX: Mazatlán vs América",
+      "link": "https://futbolibretv.pages.dev/#partido-26548"
     }
   ]
 }
-
 # ========================
 # FUNCIONES PARA FORMATEAR PARTIDOS
 # ========================
