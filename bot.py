@@ -171,9 +171,6 @@ def formato_limpio(partido_completo):
         return match.group(1).strip()
     return partido_completo
 
-def formato_completo(partido_completo):
-    return partido_completo
-
 def add_footer():
     return "\n\n🤔 *¿Quieres hacer algo más?*\nVolver al menú principal /menu"
 
@@ -261,73 +258,32 @@ def handle_callback(call):
     bot.answer_callback_query(call.id)
 
 # ========================
-# SISTEMA DE BÚSQUEDA CORREGIDO
+# BUSCADOR SUPER SIMPLE - SIN COMPLICACIONES
 # ========================
 def search_matches(message, search_term):
     try:
         partidos = PARTIDOS_JSON["partidos"]
         matches = []
 
-        search_clean = re.sub(r'[-–—vsVS]', ' ', search_term)
-        search_clean = re.sub(r'\s+', ' ', search_clean).strip().lower()
-        print(f"🔍 Búsqueda: '{search_term}' → '{search_clean}'")
+        search_clean = search_term.strip().lower()
+        print(f"🔍 Búsqueda simple: '{search_term}'")
 
         for partido in partidos:
             partido_text = partido['partido'].lower()
-            if ":" in partido_text:
-                liga = partido_text.split(":")[0].strip()
-                equipos = partido_text.split(":")[1].strip()
-            else:
-                liga = ""
-                equipos = partido_text
-
-            if search_clean in liga:
+            
+            # BUSQUEDA SIMPLE: Si la palabra aparece en cualquier parte del partido
+            if search_clean in partido_text:
                 matches.append(partido)
-                continue
 
-            equipos_list = re.split(r' vs | - ', equipos)
-            encontrado = False
-
-            for equipo in equipos_list:
-                equipo_limpio = equipo.strip()
-                if (re.search(r'\b' + re.escape(search_clean) + r'\b', equipo_limpio) or
-                    equipo_limpio.endswith(' ' + search_clean) or
-                    equipo_limpio == search_clean):
-                    encontrado = True
-                    break
-
-            if encontrado:
-                matches.append(partido)
-                continue
-
-            if len(search_clean) >= 3:
-                for equipo in equipos_list:
-                    equipo_limpio = equipo.strip()
-                    palabras_equipo = equipo_limpio.split()
-                    for palabra in palabras_equipo:
-                        if palabra.startswith(search_clean):
-                            matches.append(partido)
-                            encontrado = True
-                            break
-                    if encontrado:
-                        break
-
-        unique_matches = []
-        seen_links = set()
-        for match in matches:
-            if match['link'] not in seen_links:
-                unique_matches.append(match)
-                seen_links.add(match['link'])
-
-        if unique_matches:
+        if matches:
             result_text = f"🔍 *Resultados para '{search_term}'*:\n\n"
-            for i, match in enumerate(unique_matches, 1):
+            for i, match in enumerate(matches, 1):
                 result_text += f"*{i}. {match['partido']}*\n"
                 result_text += f"🔗 {match['link']}\n\n"
-            result_text += f"_📊 Encontré {len(unique_matches)} partido(s)_"
+            result_text += f"_📊 Encontré {len(matches)} partido(s)_"
             full_message = result_text + add_search_footer()
             bot.reply_to(message, full_message, parse_mode='Markdown')
-            print(f"🔍 Búsqueda exitosa: '{search_term}' → {len(unique_matches)} resultados")
+            print(f"🔍 Búsqueda exitosa: '{search_term}' → {len(matches)} resultados")
         else:
             result_text = f"❌ *No encontré '{search_term}' en la agenda de hoy*\n\n"
             result_text += "💡 *Sugerencias:*\n• Escribe el nombre del equipo o liga\n• Ejemplos: 'premier', 'sevilla', 'champions'\n• Usa /partidos para ver toda la agenda"
@@ -337,7 +293,7 @@ def search_matches(message, search_term):
 
     except Exception as e:
         print(f"❌ ERROR en búsqueda: {e}")
-        error_message = "❌ Error temporal. Intenta con términos más específicos." + add_footer()
+        error_message = "❌ Error temporal. Intenta de nuevo." + add_footer()
         bot.reply_to(message, error_message, parse_mode='Markdown')
 
 @bot.message_handler(func=lambda message: True)
