@@ -364,50 +364,58 @@ El modo incógnito evita problemas de cache, cookies y extensiones que pueden bl
 # SISTEMA DE BÚSQUEDA INTELIGENTE MEJORADO
 # ========================
 def search_matches(message, search_term):
-    """Buscar partidos que coincidan con el término de búsqueda - VERSIÓN MEJORADA"""
+    """Buscar partidos que coincidan con el término de búsqueda - VERSIÓN BALANCEADA"""
     try:
         partidos = PARTIDOS_JSON["partidos"]
         matches = []
         
-        # Limpiar y normalizar el término de búsqueda
-        search_clean = re.sub(r'[-–—vsVS]', ' ', search_term)  # Reemplaza "-", "vs", etc. por espacios
-        search_clean = re.sub(r'\s+', ' ', search_clean).strip().lower()  # Normaliza espacios
+        search_clean = re.sub(r'[-–—vsVS]', ' ', search_term)
+        search_clean = re.sub(r'\s+', ' ', search_clean).strip().lower()
         
         print(f"🔍 Búsqueda original: '{search_term}' → Normalizada: '{search_clean}'")
         
         for partido in partidos:
             partido_text = partido['partido'].lower()
             
-            # BUSQUEDA MEJORADA - Múltiples estrategias:
+            # SEPARAR LIGA Y EQUIPOS
+            if ":" in partido_text:
+                liga = partido_text.split(":")[0].strip()  # Ej: "premier league"
+                equipos = partido_text.split(":")[1].strip()  # Ej: "leeds united vs west ham united"
+            else:
+                liga = ""
+                equipos = partido_text
             
-            # 1. Búsqueda exacta original (para compatibilidad)
-            if search_term in partido_text:
+            # ESTRATEGIAS DE BÚSQUEDA BALANCEADAS:
+            
+            # 1. Búsqueda en LIGA (más permisiva)
+            if search_clean in liga:
                 matches.append(partido)
                 continue
                 
-            # 2. Búsqueda con términos normalizados
-            if search_clean in partido_text:
-                matches.append(partido)
-                continue
-                
-            # 3. Búsqueda por palabras individuales (si el usuario puso varios equipos)
+            # 2. Búsqueda en EQUIPOS (más estricta)
             search_words = search_clean.split()
-            if len(search_words) >= 2:
-                # Si el usuario escribió algo como "real madrid juventus"
-                all_words_match = all(word in partido_text for word in search_words)
+            if len(search_words) == 1:
+                # Una palabra: buscar como palabra completa en equipos
+                if re.search(r'\b' + re.escape(search_clean) + r'\b', equipos):
+                    matches.append(partido)
+                    continue
+            else:
+                # Múltiples palabras: buscar que TODAS estén en equipos
+                all_words_match = all(re.search(r'\b' + re.escape(word) + r'\b', equipos) for word in search_words)
                 if all_words_match:
                     matches.append(partido)
                     continue
             
-            # 4. Búsqueda flexible para casos como "real madrid - juventus" vs "real madrid vs juventus"
-            partido_clean = re.sub(r'[-–—vsVS:]', ' ', partido_text)  # Limpia el texto del partido también
-            partido_clean = re.sub(r'\s+', ' ', partido_clean).strip()
-            
-            if search_clean in partido_clean:
-                matches.append(partido)
-                continue
+            # 3. Búsqueda flexible para nombres cortos (ej: "sev" → "sevilla")
+            if len(search_clean) >= 3:
+                equipos_list = re.split(r' vs | - ', equipos)
+                for equipo in equipos_list:
+                    equipo_limpio = equipo.strip()
+                    if search_clean in equipo_limpio and any(palabra.startswith(search_clean) for palabra in equipo_limpio.split()):
+                        matches.append(partido)
+                        break
         
-        # Eliminar duplicados por si alguna estrategia encontró el mismo partido múltiples veces
+        # Eliminar duplicados
         unique_matches = []
         seen_links = set()
         for match in matches:
@@ -416,11 +424,9 @@ def search_matches(message, search_term):
                 seen_links.add(match['link'])
         
         if unique_matches:
-            # Mostrar resultados de búsqueda CON FORMATO COMPLETO
             result_text = f"🔍 *Resultados para '{search_term}'*:\n\n"
             
             for i, match in enumerate(unique_matches, 1):
-                # FORMATO COMPLETO: con liga/torneo
                 result_text += f"*{i}. {match['partido']}*\n"
                 result_text += f"🔗 {match['link']}\n\n"
             
@@ -431,24 +437,19 @@ def search_matches(message, search_term):
             print(f"🔍 Búsqueda exitosa: '{search_term}' → {len(unique_matches)} resultados")
             
         else:
-            # Si no encuentra resultados - ESTO NO ES UN ERROR, es normal
             result_text = f"❌ *No encontré '*'{search_term}'* en la agenda de hoy*\n\n"
             result_text += "💡 *Sugerencias:*\n"
-            result_text += "• Escribe solo un equipo (ej: 'real madrid')\n"
-            result_text += "• O escribe solo 'champions' para ver todos\n"
-            result_text += "• Usa /partidos para ver toda la agenda\n\n"
-            result_text += "⚽ *Equipos disponibles hoy:* Real Madrid, Juventus, Barcelona, Liverpool, etc."
+            result_text += "• Escribe el nombre del equipo o liga\n"
+            result_text += "• Ejemplos: 'premier', 'sevilla', 'champions'\n"
+            result_text += "• Usa /partidos para ver toda la agenda"
             
             full_message = result_text + add_search_footer()
             bot.reply_to(message, full_message, parse_mode='Markdown')
             print(f"🔍 Búsqueda sin resultados: '{search_term}'")
         
     except Exception as e:
-        # SOLO mostrar error si es una excepción real
-        print(f"❌ ERROR REAL en búsqueda: {e}")
-        
-        # Si hay error, mostrar mensaje simple
-        error_message = "❌ Error temporal. Intenta con términos más simples como 'real madrid' o 'juventus'." + add_footer()
+        print(f"❌ ERROR en búsqueda: {e}")
+        error_message = "❌ Error temporal. Intenta con términos más específicos." + add_footer()
         bot.reply_to(message, error_message, parse_mode='Markdown')
 
 # ========================
