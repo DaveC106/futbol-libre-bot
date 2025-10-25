@@ -405,23 +405,32 @@ def send_matches(message):
         partidos = PARTIDOS_JSON["partidos"]
 
         if partidos:
-            partidos_text = "⚽️ *PARTIDOS DE HOY* ⚽️\n\n"
-            for i, partido in enumerate(partidos, 1):
+            bloque = ""
+            contador = 1
+            max_chars = 3500  # Telegram tiene límite ~4096, dejar margen
+            for partido in partidos:
                 partido_limpio = formato_limpio(partido['partido'])
-                partidos_text += f"*{i}. {partido_limpio}*\n"
-                partidos_text += f"🔗 {partido['link']}\n\n"
-            partidos_text += "\n\n**Para buscar un partido en específico, escribe directamente el nombre de tu equipo o el de su liga.** ⭐"
-        else:
-            partidos_text = "❌ *No hay partidos disponibles en este momento.*\n\nIntenta más tarde o usa /ayuda para soporte."
+                texto = f"*{contador}. {partido_limpio}*\n🔗 {partido['link']}\n\n"
+                if len(bloque) + len(texto) > max_chars:
+                    bot.reply_to(message, bloque, parse_mode='Markdown')
+                    bloque = ""
+                bloque += texto
+                contador += 1
 
-        full_message = partidos_text + add_footer()
-        bot.reply_to(message, full_message, parse_mode='Markdown')
-        print("✅ /partidos enviado (formato limpio)")
+            if bloque:  # Enviar el bloque final
+                bot.reply_to(message, bloque, parse_mode='Markdown')
+
+            footer = add_footer()
+            bot.reply_to(message, footer, parse_mode='Markdown')
+            print("✅ /partidos enviado en bloques")
+
+        else:
+            bot.reply_to(message, "❌ *No hay partidos disponibles en este momento.*\n\nIntenta más tarde o usa /ayuda para soporte.", parse_mode='Markdown')
 
     except Exception as e:
         print(f"Error en /partidos: {e}")
-        error_message = "❌ Error al cargar los partidos. Intenta más tarde." + add_footer()
-        bot.reply_to(message, error_message, parse_mode='Markdown')
+        bot.reply_to(message, "❌ Error al cargar los partidos. Intenta más tarde." + add_footer(), parse_mode='Markdown')
+
 
 @bot.message_handler(commands=['ayuda'])
 def send_help(message):
