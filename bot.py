@@ -20,47 +20,51 @@ PARTIDOS_JSON = {
   "partidos": [
     {
       "partido": "Süper Lig: Gaziantep FK vs Fenerbahçe",
-      "link": "https://futbolibretv.pages.dev/#partido-26398"
+      "link": "https://futbolibretv.pages.dev/#partido-26722"
     },
     {
       "partido": "ATP: Rolex Paris Masters (Primera Ronda]",
-      "link": "https://futbolibretv.pages.dev/#partido-26399"
+      "link": "https://futbolibretv.pages.dev/#partido-26723"
+    },
+    {
+      "partido": "Copa de la División Profesional: San Antonio Bulo Bulo vs Independiente Petrolero",
+      "link": "https://futbolibretv.pages.dev/#partido-26738"
     },
     {
       "partido": "Liga Profesional: Barracas Central vs Boca Juniors",
-      "link": "https://futbolibretv.pages.dev/#partido-26400"
+      "link": "https://futbolibretv.pages.dev/#partido-26721"
     },
     {
       "partido": "LaLiga: Real Betis vs Atlético Madrid",
-      "link": "https://futbolibretv.pages.dev/#partido-26401"
+      "link": "https://futbolibretv.pages.dev/#partido-26719"
     },
     {
-      "partido": "League One: Port Vale vs Stockport County",
-      "link": "https://futbolibretv.pages.dev/#partido-26402"
+      "partido": "Primeira Liga: Moreirense vs Porto",
+      "link": "https://futbolibretv.pages.dev/#partido-26720"
     },
     {
-      "partido": "Primera División: Sportivo Ameliano vs General Caballero JLM",
-      "link": "https://futbolibretv.pages.dev/#partido-26403"
-    },
-    {
-      "partido": "Primera División: Colo-Colo vs Deportes Limache",
-      "link": "https://futbolibretv.pages.dev/#partido-26404"
-    },
-    {
-      "partido": "Primera División: Nacional Asunción vs Cerro Porteño",
-      "link": "https://futbolibretv.pages.dev/#partido-26405"
+      "partido": "Serie B: Chapecoense vs Operário PR",
+      "link": "https://futbolibretv.pages.dev/#partido-26740"
     },
     {
       "partido": "MLB: Los Angeles Dodgers vs Toronto Blue Jays",
-      "link": "https://futbolibretv.pages.dev/#partido-26406"
+      "link": "https://futbolibretv.pages.dev/#partido-26734"
+    },
+    {
+      "partido": "Copa de la División Profesional: Bolívar vs Real Tomayapo",
+      "link": "https://futbolibretv.pages.dev/#partido-26739"
     },
     {
       "partido": "NFL: Washington Commanders vs. Kansas City Chiefs",
-      "link": "https://futbolibretv.pages.dev/#partido-26407"
+      "link": "https://futbolibretv.pages.dev/#partido-26735"
+    },
+    {
+      "partido": "Serie B: Athletico-PR vs Amazonas",
+      "link": "https://futbolibretv.pages.dev/#partido-26741"
     },
     {
       "partido": "Primera A: Deportivo Pasto vs Deportivo Pereira",
-      "link": "https://futbolibretv.pages.dev/#partido-26408"
+      "link": "https://futbolibretv.pages.dev/#partido-26737"
     }
   ]
 }
