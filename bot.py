@@ -19,34 +19,6 @@ app = Flask(__name__)
 PARTIDOS_JSON = {
   "partidos": [
     {
-      "partido": "Süper Lig: Gaziantep FK vs Fenerbahçe",
-      "link": "https://futbolibretv.pages.dev/#partido-26722"
-    },
-    {
-      "partido": "ATP: Rolex Paris Masters (Primera Ronda]",
-      "link": "https://futbolibretv.pages.dev/#partido-26723"
-    },
-    {
-      "partido": "Copa de la División Profesional: San Antonio Bulo Bulo vs Independiente Petrolero",
-      "link": "https://futbolibretv.pages.dev/#partido-26738"
-    },
-    {
-      "partido": "Liga Profesional: Barracas Central vs Boca Juniors",
-      "link": "https://futbolibretv.pages.dev/#partido-26721"
-    },
-    {
-      "partido": "LaLiga: Real Betis vs Atlético Madrid",
-      "link": "https://futbolibretv.pages.dev/#partido-26719"
-    },
-    {
-      "partido": "Primeira Liga: Moreirense vs Porto",
-      "link": "https://futbolibretv.pages.dev/#partido-26720"
-    },
-    {
-      "partido": "Serie B: Chapecoense vs Operário PR",
-      "link": "https://futbolibretv.pages.dev/#partido-26740"
-    },
-    {
       "partido": "MLB: Los Angeles Dodgers vs Toronto Blue Jays",
       "link": "https://futbolibretv.pages.dev/#partido-26734"
     },
