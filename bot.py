@@ -17,7 +17,52 @@ app = Flask(__name__)
 # PARTIDOS DIRECTAMENTE EN EL CÓDIGO.
 # ========================
 PARTIDOS_JSON = {
-  "partidos": []
+  "partidos": [
+    {
+      "partido": "Süper Lig: Gaziantep FK vs Fenerbahçe",
+      "link": "https://futbolibretv.pages.dev/#partido-26398"
+    },
+    {
+      "partido": "ATP: Rolex Paris Masters (Primera Ronda]",
+      "link": "https://futbolibretv.pages.dev/#partido-26399"
+    },
+    {
+      "partido": "Liga Profesional: Barracas Central vs Boca Juniors",
+      "link": "https://futbolibretv.pages.dev/#partido-26400"
+    },
+    {
+      "partido": "LaLiga: Real Betis vs Atlético Madrid",
+      "link": "https://futbolibretv.pages.dev/#partido-26401"
+    },
+    {
+      "partido": "League One: Port Vale vs Stockport County",
+      "link": "https://futbolibretv.pages.dev/#partido-26402"
+    },
+    {
+      "partido": "Primera División: Sportivo Ameliano vs General Caballero JLM",
+      "link": "https://futbolibretv.pages.dev/#partido-26403"
+    },
+    {
+      "partido": "Primera División: Colo-Colo vs Deportes Limache",
+      "link": "https://futbolibretv.pages.dev/#partido-26404"
+    },
+    {
+      "partido": "Primera División: Nacional Asunción vs Cerro Porteño",
+      "link": "https://futbolibretv.pages.dev/#partido-26405"
+    },
+    {
+      "partido": "MLB: Los Angeles Dodgers vs Toronto Blue Jays",
+      "link": "https://futbolibretv.pages.dev/#partido-26406"
+    },
+    {
+      "partido": "NFL: Washington Commanders vs. Kansas City Chiefs",
+      "link": "https://futbolibretv.pages.dev/#partido-26407"
+    },
+    {
+      "partido": "Primera A: Deportivo Pasto vs Deportivo Pereira",
+      "link": "https://futbolibretv.pages.dev/#partido-26408"
+    }
+  ]
 }
 
 def formato_limpio(partido_completo):
