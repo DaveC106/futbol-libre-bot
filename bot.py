@@ -184,7 +184,7 @@ def formato_limpio(partido_completo):
     return partido_completo
 
 def add_footer():
-    return "\n\n🤔 *¿Quieres hacer algo más?*\nVolver al menú principal /menu"
+    return "\n\nEscribe el nombre del partido que quieres ver, o vuelve al /menu"
 
 def add_search_footer():
     return "\n\n🤔 *¿Quieres hacer algo más?*\nBuscar otro partido o /menu"
