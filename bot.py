@@ -17,28 +17,7 @@ app = Flask(__name__)
 # PARTIDOS DIRECTAMENTE EN EL CÓDIGO.
 # ========================
 PARTIDOS_JSON = {
-  "partidos": [
-    {
-      "partido": "MLB: Los Angeles Dodgers vs Toronto Blue Jays",
-      "link": "https://futbolibretv.pages.dev/#partido-26734"
-    },
-    {
-      "partido": "Copa de la División Profesional: Bolívar vs Real Tomayapo",
-      "link": "https://futbolibretv.pages.dev/#partido-26739"
-    },
-    {
-      "partido": "NFL: Washington Commanders vs. Kansas City Chiefs",
-      "link": "https://futbolibretv.pages.dev/#partido-26735"
-    },
-    {
-      "partido": "Serie B: Athletico-PR vs Amazonas",
-      "link": "https://futbolibretv.pages.dev/#partido-26741"
-    },
-    {
-      "partido": "Primera A: Deportivo Pasto vs Deportivo Pereira",
-      "link": "https://futbolibretv.pages.dev/#partido-26737"
-    }
-  ]
+  "partidos": []
 }
 
 def formato_limpio(partido_completo):
