@@ -5,6 +5,7 @@ from telebot.types import ReplyKeyboardMarkup, KeyboardButton, InlineKeyboardMar
 import os
 import re
 import time
+import unicodedata   # <-- agregado
 
 TOKEN = os.environ.get('BOT_TOKEN')
 if not TOKEN:
@@ -12,6 +13,15 @@ if not TOKEN:
 
 bot = telebot.TeleBot(TOKEN)
 app = Flask(__name__)
+
+# ========================
+# FUNCION QUITAR TILDES
+# ========================
+def quitar_tildes(texto):
+    return ''.join(
+        c for c in unicodedata.normalize('NFD', texto)
+        if unicodedata.category(c) != 'Mn'
+    )
 
 # ========================
 # PARTIDOS DIRECTAMENTE EN EL CÓDIGO.
@@ -124,6 +134,7 @@ PARTIDOS_JSON = {
     }
   ]
 }
+
 def formato_limpio(partido_completo):
     match = re.search(r':\s*(.+)', partido_completo)
     if match:
@@ -162,7 +173,7 @@ def send_matches(message):
         if partidos:
             bloque = ""
             contador = 1
-            max_chars = 3500  # Telegram tiene límite ~4096, dejar margen
+            max_chars = 3500
             for partido in partidos:
                 partido_limpio = formato_limpio(partido['partido'])
                 texto = f"*{contador}. {partido_limpio}*\n🔗 {partido['link']}\n\n"
@@ -172,7 +183,7 @@ def send_matches(message):
                 bloque += texto
                 contador += 1
 
-            if bloque:  # Enviar el bloque final
+            if bloque:
                 bot.reply_to(message, bloque, parse_mode='Markdown')
 
             footer = add_footer()
@@ -223,7 +234,7 @@ Solución: Usar VPN para desbloquear
 
 1. Descarga una app VPN gratis:
    📲 Turbo VPN (Android/iOS)
-   📲 Windscribe 
+   📲 Windscribe
    📲 Hotspot Shield
    📲 Cloudflare WARP (1.1.1.1)
 
@@ -297,20 +308,19 @@ El modo incógnito evita problemas de cache, cookies y extensiones que pueden bl
     bot.answer_callback_query(call.id)
 
 # ========================
-# BUSCADOR SUPER SIMPLE - SIN COMPLICACIONES
+# BUSCADOR SUPER SIMPLE IGNORA TILDES
 # ========================
 def search_matches(message, search_term):
     try:
         partidos = PARTIDOS_JSON["partidos"]
         matches = []
 
-        search_clean = search_term.strip().lower()
+        search_clean = quitar_tildes(search_term.strip().lower())
         print(f"🔍 Búsqueda simple: '{search_term}'")
 
         for partido in partidos:
-            partido_text = partido['partido'].lower()
+            partido_text = quitar_tildes(partido['partido'].lower())
             
-            # BUSQUEDA SIMPLE: Si la palabra aparece en cualquier parte del partido
             if search_clean in partido_text:
                 matches.append(partido)
 
@@ -343,7 +353,7 @@ def handle_all_messages(message):
     search_matches(message, text)
 
 def run_bot():
-    print("🤖 Bot iniciado en Render - 24/7 activo")
+    print("🤖 Bot iniciado en Render 24/7 activo")
     while True:
         try:
             bot.polling(none_stop=True, timeout=30, skip_pending=True)
@@ -362,7 +372,7 @@ def run_bot():
 
 @app.route('/')
 def home():
-    return "✅ Bot activo - Render 24/7"
+    return "✅ Bot activo en Render 24/7"
 
 if __name__ == "__main__":
     bot_thread = threading.Thread(target=run_bot)
