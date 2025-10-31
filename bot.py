@@ -131,6 +131,14 @@ PARTIDOS_JSON = {
     {
       "partido": "Liga MX: Puebla vs Cruz Azul",
       "link": "https://futbolibretv.pages.dev/#partido-26916"
+    },
+      {
+      "partido": "Primera Nacional: Instituto Vs Rosario Central",
+      "link": "https://futbolibretv.pages.dev/#partido-26999"
+    },
+      {
+      "partido": "Liga Profesional: Newell's Old Boys vs Unión Santa Fe",
+      "link": "https://futbolibretv.pages.dev/#partido-26997"
     }
   ]
 }
