@@ -27,7 +27,308 @@ def quitar_tildes(texto):
 # PARTIDOS DIRECTAMENTE EN EL CÓDIGO.
 # ========================
 PARTIDOS_JSON = {
-  "partidos": []
+  "partidos": [
+    {
+      "partido": "2. Bundesliga: Nürnberg vs Eintracht Braunschweig",
+      "link": "https://futbolibretv.pages.dev/#partido-26993"
+    },
+    {
+      "partido": "FA Cup: Chelmsford City vs Braintree Town",
+      "link": "https://futbolibretv.pages.dev/#partido-26989"
+    },
+    {
+      "partido": "2. Bundesliga: Hertha BSC vs Dynamo Dresden",
+      "link": "https://futbolibretv.pages.dev/#partido-26994"
+    },
+    {
+      "partido": "Women's Super League: Manchester City vs West Ham United",
+      "link": "https://futbolibretv.pages.dev/#partido-26991"
+    },
+    {
+      "partido": "Women's Super League: Chelsea FC vs London City Lionesses",
+      "link": "https://futbolibretv.pages.dev/#partido-26992"
+    },
+    {
+      "partido": "2. Bundesliga: Karlsruher SC vs Schalke 04",
+      "link": "https://futbolibretv.pages.dev/#partido-26995"
+    },
+    {
+      "partido": "Championship: Leicester City vs Blackburn Rovers",
+      "link": "https://futbolibretv.pages.dev/#partido-26987"
+    },
+    {
+      "partido": "Primera División: Progreso vs Torque",
+      "link": "https://futbolibretv.pages.dev/#partido-26984"
+    },
+    {
+      "partido": "LaLiga: Villarreal vs Rayo Vallecano",
+      "link": "https://futbolibretv.pages.dev/#partido-26949"
+    },
+    {
+      "partido": "Serie A: Udinese vs Atalanta",
+      "link": "https://futbolibretv.pages.dev/#partido-26953"
+    },
+    {
+      "partido": "Bundesliga: RB Leipzig vs Stuttgart",
+      "link": "https://futbolibretv.pages.dev/#partido-26958"
+    },
+    {
+      "partido": "Bundesliga: Mainz 05 vs Werder Bremen",
+      "link": "https://futbolibretv.pages.dev/#partido-26956"
+    },
+    {
+      "partido": "Bundesliga: Heidenheim vs Eintracht Frankfurt",
+      "link": "https://futbolibretv.pages.dev/#partido-26959"
+    },
+    {
+      "partido": "Bundesliga: Union Berlin vs Freiburg",
+      "link": "https://futbolibretv.pages.dev/#partido-26957"
+    },
+    {
+      "partido": "Bundesliga: St. Pauli vs Borussia M'gladbach",
+      "link": "https://futbolibretv.pages.dev/#partido-26960"
+    },
+    {
+      "partido": "Premier League: Fulham vs Wolverhampton Wanderers",
+      "link": "https://futbolibretv.pages.dev/#partido-26942"
+    },
+    {
+      "partido": "Premier League: Brighton & Hove Albion vs Leeds United",
+      "link": "https://futbolibretv.pages.dev/#partido-26944"
+    },
+    {
+      "partido": "Premier League: Burnley vs Arsenal",
+      "link": "https://futbolibretv.pages.dev/#partido-26946"
+    },
+    {
+      "partido": "Championship: Queens Park Rangers vs Ipswich Town",
+      "link": "https://futbolibretv.pages.dev/#partido-26988"
+    },
+    {
+      "partido": "Premier League: Crystal Palace vs Brentford",
+      "link": "https://futbolibretv.pages.dev/#partido-26943"
+    },
+    {
+      "partido": "Premier League: Nottingham Forest vs Manchester United",
+      "link": "https://futbolibretv.pages.dev/#partido-26945"
+    },
+    {
+      "partido": "LaLiga SmartBank: Cultural Leonesa vs Mirandés",
+      "link": "https://futbolibretv.pages.dev/#partido-27006"
+    },
+    {
+      "partido": "LaLiga: Atlético Madrid vs Sevilla",
+      "link": "https://futbolibretv.pages.dev/#partido-26950"
+    },
+    {
+      "partido": "Primeira Liga: Nacional vs Famalicão",
+      "link": "https://futbolibretv.pages.dev/#partido-26965"
+    },
+    {
+      "partido": "Eredivisie: Ajax vs Heerenveen",
+      "link": "https://futbolibretv.pages.dev/#partido-27002"
+    },
+    {
+      "partido": "Ligue 1: PSG vs Nice",
+      "link": "https://futbolibretv.pages.dev/#partido-26962"
+    },
+    {
+      "partido": "Primera Nacional: Atlanta vs Deportivo Morón",
+      "link": "https://futbolibretv.pages.dev/#partido-27013"
+    },
+    {
+      "partido": "Super Lig: Galatasaray vs Trabzonspor",
+      "link": "https://futbolibretv.pages.dev/#partido-27010"
+    },
+    {
+      "partido": "Serie A: Napoli vs Como",
+      "link": "https://futbolibretv.pages.dev/#partido-26954"
+    },
+    {
+      "partido": "LaLiga: Real Sociedad vs Athletic Club",
+      "link": "https://futbolibretv.pages.dev/#partido-26951"
+    },
+    {
+      "partido": "Bundesliga: Bayern München vs Bayer Leverkusen",
+      "link": "https://futbolibretv.pages.dev/#partido-26961"
+    },
+    {
+      "partido": "LaLiga SmartBank: Albacete vs Huesca",
+      "link": "https://futbolibretv.pages.dev/#partido-27007"
+    },
+    {
+      "partido": "LaLiga SmartBank: Leganés vs Burgos",
+      "link": "https://futbolibretv.pages.dev/#partido-27008"
+    },
+    {
+      "partido": "Premier League: Tottenham Hotspur vs Chelsea",
+      "link": "https://futbolibretv.pages.dev/#partido-26947"
+    },
+    {
+      "partido": "FA Cup: Brackley Town vs Notts County",
+      "link": "https://futbolibretv.pages.dev/#partido-26990"
+    },
+    {
+      "partido": "Eredivisie: NAC Breda vs Go Ahead Eagles",
+      "link": "https://futbolibretv.pages.dev/#partido-27003"
+    },
+    {
+      "partido": "Liga Profesional: Aldosivi vs Independiente Rivadavia",
+      "link": "https://futbolibretv.pages.dev/#partido-26967"
+    },
+    {
+      "partido": "Liga 1: Los Chankas vs Ayacucho",
+      "link": "https://futbolibretv.pages.dev/#partido-26939"
+    },
+    {
+      "partido": "Ligue 1: Monaco vs Paris",
+      "link": "https://futbolibretv.pages.dev/#partido-26963"
+    },
+    {
+      "partido": "Primera División: Real Oruro vs Gualberto Villarroel SJ",
+      "link": "https://futbolibretv.pages.dev/#partido-26971"
+    },
+    {
+      "partido": "Brasileirão: Cruzeiro vs Vitória",
+      "link": "https://futbolibretv.pages.dev/#partido-26972"
+    },
+    {
+      "partido": "Eredivisie: Feyenoord vs Volendam",
+      "link": "https://futbolibretv.pages.dev/#partido-27004"
+    },
+    {
+      "partido": "Liga Profesional: Barracas Central vs Argentinos Juniors",
+      "link": "https://futbolibretv.pages.dev/#partido-26968"
+    },
+    {
+      "partido": "Brasileirão: Santos vs Fortaleza",
+      "link": "https://futbolibretv.pages.dev/#partido-26973"
+    },
+    {
+      "partido": "Serie A: Técnico Universitario vs Mushuc Runa",
+      "link": "https://futbolibretv.pages.dev/#partido-26980"
+    },
+    {
+      "partido": "2. Bundesliga: Darmstadt 98 vs Arminia Bielefeld",
+      "link": "https://futbolibretv.pages.dev/#partido-26996"
+    },
+    {
+      "partido": "Primera División: Liverpool vs Juventud",
+      "link": "https://futbolibretv.pages.dev/#partido-26985"
+    },
+    {
+      "partido": "Serie A: Cremonese vs Juventus",
+      "link": "https://futbolibretv.pages.dev/#partido-26955"
+    },
+    {
+      "partido": "Eredivisie: Telstar vs Excelsior",
+      "link": "https://futbolibretv.pages.dev/#partido-27005"
+    },
+    {
+      "partido": "Liga Profesional: Vélez Sarsfield vs Talleres Córdoba",
+      "link": "https://futbolibretv.pages.dev/#partido-26969"
+    },
+    {
+      "partido": "Premier League: Liverpool vs Aston Villa",
+      "link": "https://futbolibretv.pages.dev/#partido-26948"
+    },
+    {
+      "partido": "LaLiga: Real Madrid vs Valencia",
+      "link": "https://futbolibretv.pages.dev/#partido-26952"
+    },
+    {
+      "partido": "LaLiga SmartBank: Almería vs Eibar",
+      "link": "https://futbolibretv.pages.dev/#partido-27009"
+    },
+    {
+      "partido": "Ligue 1: Auxerre vs Olympique Marseille",
+      "link": "https://futbolibretv.pages.dev/#partido-26964"
+    },
+    {
+      "partido": "Liga 1: Comerciantes Unidos vs Sporting Cristal",
+      "link": "https://futbolibretv.pages.dev/#partido-26940"
+    },
+    {
+      "partido": "Primeira Liga: Vitória Guimarães vs Benfica",
+      "link": "https://futbolibretv.pages.dev/#partido-26966"
+    },
+    {
+      "partido": "Primera División: Nacional Asunción vs Sportivo Trinidense",
+      "link": "https://futbolibretv.pages.dev/#partido-26982"
+    },
+    {
+      "partido": "Primera División: Ñublense vs Colo-Colo",
+      "link": "https://futbolibretv.pages.dev/#partido-26976"
+    },
+    {
+      "partido": "Brasileirão: Mirassol vs Botafogo",
+      "link": "https://futbolibretv.pages.dev/#partido-26974"
+    },
+    {
+      "partido": "Primera A: Alianza vs Boyacá Chicó",
+      "link": "https://futbolibretv.pages.dev/#partido-26977"
+    },
+    {
+      "partido": "Serie A: Aucas vs El Nacional",
+      "link": "https://futbolibretv.pages.dev/#partido-26981"
+    },
+    {
+      "partido": "Liga MX Femenil: Cruz Azul vs Tigres UANL",
+      "link": "https://futbolibretv.pages.dev/#partido-26998"
+    },
+    {
+      "partido": "Primera División: Cerro vs Nacional",
+      "link": "https://futbolibretv.pages.dev/#partido-26986"
+    },
+    {
+      "partido": "Liga MX Femenil: León vs Pumas UNAM",
+      "link": "https://futbolibretv.pages.dev/#partido-26999"
+    },
+    {
+      "partido": "Liga MX Femenil: Atlético San Luis vs Santos Laguna",
+      "link": "https://futbolibretv.pages.dev/#partido-27000"
+    },
+    {
+      "partido": "Liga 1: Deportivo Garcilaso vs ADT",
+      "link": "https://futbolibretv.pages.dev/#partido-26941"
+    },
+    {
+      "partido": "Liga Profesional: Independiente vs Atlético Tucumán",
+      "link": "https://futbolibretv.pages.dev/#partido-26970"
+    },
+    {
+      "partido": "Primera División: Libertad vs Olimpia",
+      "link": "https://futbolibretv.pages.dev/#partido-26983"
+    },
+    {
+      "partido": "Primera A: Deportivo Pereira vs Medellín",
+      "link": "https://futbolibretv.pages.dev/#partido-26978"
+    },
+    {
+      "partido": "Major League Soccer: Nashville SC vs Inter Miami",
+      "link": "https://futbolibretv.pages.dev/#partido-27011"
+    },
+    {
+      "partido": "USL Super League: Fort Lauderdale United vs Brooklyn",
+      "link": "https://futbolibretv.pages.dev/#partido-27012"
+    },
+    {
+      "partido": "Brasileirão: Flamengo vs Sport Recife",
+      "link": "https://futbolibretv.pages.dev/#partido-26975"
+    },
+    {
+      "partido": "Liga MX Femenil: Mazatlán vs América",
+      "link": "https://futbolibretv.pages.dev/#partido-27001"
+    },
+    {
+      "partido": "Liga de Expansión MX: Tlaxcala vs Atlético Morelia",
+      "link": "https://futbolibretv.pages.dev/#partido-26997"
+    },
+    {
+      "partido": "Primera A: Once Caldas vs Deportivo Pasto",
+      "link": "https://futbolibretv.pages.dev/#partido-26979"
+    }
+  ]
 }
 
 def formato_limpio(partido_completo):
